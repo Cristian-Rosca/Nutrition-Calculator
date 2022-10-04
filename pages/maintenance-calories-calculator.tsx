@@ -1,7 +1,8 @@
+import Navbar from "../components/Navbar";
+
 const MaintenanceCaloriesCalculator = () => {
     return ( 
         <div>
-            <h1>Nutrition Calculator</h1>
             <h2>Calculate your maintenance calorie intake</h2>
             <form>
                 <label>Inputs</label>
