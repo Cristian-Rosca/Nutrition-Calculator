@@ -24,3 +24,11 @@ a {
     background: black;
   }
 }
+
+.not-found {
+  text-align: center;
+}
+.not-found a{
+  color: #4979ff;
+  text-decoration: underline;
+}
