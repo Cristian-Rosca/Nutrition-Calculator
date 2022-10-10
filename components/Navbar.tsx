@@ -1,10 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
     return ( 
         <nav>
             <div>
+                <Image src="/imperium.png" width={77} height={77}/>
                 <h1>Nutrition Calculator</h1>
+                
             </div>
             <Link href="/maintenance-calories-calculator"><a>Step 1: Calculate Maintenance Calories</a></Link>
             <Link href="/"><a>Step 2: Set Rate of Progression</a></Link>
