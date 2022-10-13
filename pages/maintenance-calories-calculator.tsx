@@ -30,25 +30,6 @@ const MaintenanceCaloriesCalculator = () => {
             setUserMaintenanceCalories(calculateMaintenanceCalories(userRMR, userPhysicalActivityLevel))
     }, [userRMR, userPhysicalActivityLevel]);
     
-
-    // useEffect(() => {
-    //     console.log("BW:", userBodyWeight);
-    // }, [userBodyWeight]);
-    
-    // useEffect(() => {
-    //     console.log("Height:", userHeightInCM);
-    // }, [userHeightInCM]);
-    
-    // useEffect(() => {
-    //     console.log("Age:", userAge);
-    // }, [userAge]);
-    
-    // useEffect(() => {
-    //     console.log("Height:", userSex);
-    // }, [userSex]);
-
-
-    
     return ( 
         <>
         <Head>
@@ -101,8 +82,6 @@ function calculateRMR(sex: string, bodyWeight: number, heightInCM: number, age :
     else if (sex === "Female"){
         genderConst = -161
     }
-
-
 
     RMR = (bodyWeight * 10) + (6.25 * heightInCM) - (5 * age) + genderConst
     return Math.floor(RMR)
