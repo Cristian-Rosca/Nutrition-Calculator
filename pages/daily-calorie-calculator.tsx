@@ -26,6 +26,8 @@ const DailyCalorieCalculator = () => {
     
     const [availableUserRatesOfWeightChange, setAvailableUserRatesOfWeightChange] = React.useState<RateOfWeightChange[]>([])
     
+    const [weightChangeOptionDropdown, setWeightChangeOptionDropdown] = React.useState<JSX.Element[]>([])
+
     const [userRateOfWeightChange, setUserRatesOfWeightChange] = React.useState<number>(0)
     const handleUserRatesOfWeightChangeChange = (e : React.ChangeEvent<HTMLSelectElement>) => setUserRatesOfWeightChange(Number(e.target.value))
 
@@ -73,7 +75,7 @@ const DailyCalorieCalculator = () => {
                         setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"], weightChangeLegend["mediumDiet"]])
                     }
                     else if (bodyFatPercentage >= 28){
-                        setAvailableUserRatesOfWeightChange([weightChangeLegend["slowGain"], weightChangeLegend["mediumGain"], weightChangeLegend["fastGain"]])
+                        setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"], weightChangeLegend["mediumDiet"], weightChangeLegend["fastDiet"]])
                     }
                 }
             }
@@ -82,35 +84,26 @@ const DailyCalorieCalculator = () => {
     }
 
     useEffect(() => {
+        if (userSex != '' && userGoal != '' && userBodyFatPercentage != 0) {    
             findAvailableUserRatesOfWeightChange(userSex, userGoal, userBodyFatPercentage)
-            
-            
+        }
     }, [userSex, userGoal, userBodyFatPercentage]);
 
+    
     useEffect(() => {
-        console.log('rates:', availableUserRatesOfWeightChange)
+        
+        let weightChangeOptions = availableUserRatesOfWeightChange.map((item, i) => {
+        return (
+            <option key={i} value={item.value}>{item.label}</option>
+        )
+        }, this);
+        setWeightChangeOptionDropdown(weightChangeOptions)
+        
+        console.log('options:', weightChangeOptions);
+        
     }, [availableUserRatesOfWeightChange]);
+    
 
-    // useEffect(() => {
-    //     console.log('sex', userSex)
-    //     console.log('bf', userBodyFatPercentage)
-    //     console.log('goal', userGoal)
-    // }, [userSex, userBodyFatPercentage, userGoal]);
-    
-    // useEffect(() => {
-    //     let weightChangeOptions = availableUserRatesOfWeightChange.length > 0
-    //         && availableUserRatesOfWeightChange.map((item, i) => {
-    //     return (
-    //         <option key={i} value={item.value}>{item.label}</option>
-    //     )
-    //     }, this);
-        
-    //     console.log(availableUserRatesOfWeightChange);
-    //     console.log(weightChangeOptions);
-        
-    // }, [availableUserRatesOfWeightChange]);
-    
-    // findAvailableUserRatesOfWeightChange(userSex, userGoal, userBodyFatPercentage)
 
     function calculateDailyCalorieTarget(bodyWeightInKG: number, maintenanceCalorieIntake: number, rateOfWeightChange: number){
         const kcalsPerKG : number = 7700
@@ -154,9 +147,7 @@ const DailyCalorieCalculator = () => {
             </Select>
             <Text mb='8px'>Target Rate of Weight Change:</Text>
             <Select bg='white' placeholder="Select from dropdown" mb={3} onChange={handleUserRatesOfWeightChangeChange} whiteSpace="normal">
-                <option value='1'>yet to implement</option>
-                <option value='1'>yet to implement</option>
-                <option value='1'>yet to implement</option>
+                {weightChangeOptionDropdown}
             </Select>
             </Flex>
             <Divider mb={"3"} mt={"3"} orientation='horizontal' />
