@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Divider, Flex, Heading, Input, Select, Text, } from "@chakra-ui/react";
 import Head from "next/head";
 
@@ -42,40 +42,73 @@ const DailyCalorieCalculator = () => {
     }
 
     function findAvailableUserRatesOfWeightChange(sex: string, goal : string, bodyFatPercentage: number) {
-        if(sex === "Male"){
-            if (goal === "gaining"){
-                setAvailableUserRatesOfWeightChange([weightChangeLegend["slowGain"], weightChangeLegend["mediumGain"], weightChangeLegend["fastGain"]])
+       if (sex != '' && goal != '' && bodyFatPercentage != 0){
+        console.log('entered function');
+        
+           if(sex === "Male"){
+               if (goal === "Gaining"){
+                   setAvailableUserRatesOfWeightChange([weightChangeLegend["slowGain"], weightChangeLegend["mediumGain"], weightChangeLegend["fastGain"]])
+                }
+                else if (goal === "Dieting"){
+                    if (bodyFatPercentage <= 10){
+                        setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"]])
+                    }
+                    else if (bodyFatPercentage <= 15){
+                        setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"], weightChangeLegend["mediumDiet"]])
+                    }
+                    else if (bodyFatPercentage >= 16){
+                        setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"], weightChangeLegend["mediumDiet"], weightChangeLegend["fastDiet"]])
+                    }
+                }
             }
-            else if (goal === "dieting"){
-                if (bodyFatPercentage <= 10){
-                    setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"]])
-                }
-                else if (bodyFatPercentage <= 15){
-                    setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"], weightChangeLegend["mediumDiet"]])
-                }
-                else if (bodyFatPercentage >= 16){
-                    setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"], weightChangeLegend["mediumDiet"], weightChangeLegend["fastDiet"]])
-                }
-            }
-        }
-        else if (sex === "Female"){
-            if (goal === "gaining"){
-                setAvailableUserRatesOfWeightChange([weightChangeLegend["slowGain"], weightChangeLegend["mediumGain"], weightChangeLegend["fastGain"]])
-            }
-            else if (goal === "dieting"){
-                if (bodyFatPercentage <= 20){
-                    setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"]])
-                }
-                else if (bodyFatPercentage <= 27){
-                    setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"], weightChangeLegend["mediumDiet"]])
-                }
-                else if (bodyFatPercentage >= 28){
+            else if (sex === "Female"){
+                if (goal === "Gaining"){
                     setAvailableUserRatesOfWeightChange([weightChangeLegend["slowGain"], weightChangeLegend["mediumGain"], weightChangeLegend["fastGain"]])
+                }
+                else if (goal === "Dieting"){
+                    if (bodyFatPercentage <= 20){
+                        setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"]])
+                    }
+                    else if (bodyFatPercentage <= 27){
+                        setAvailableUserRatesOfWeightChange([weightChangeLegend["slowDiet"], weightChangeLegend["mediumDiet"]])
+                    }
+                    else if (bodyFatPercentage >= 28){
+                        setAvailableUserRatesOfWeightChange([weightChangeLegend["slowGain"], weightChangeLegend["mediumGain"], weightChangeLegend["fastGain"]])
+                    }
                 }
             }
         }
 
     }
+
+    useEffect(() => {
+            findAvailableUserRatesOfWeightChange(userSex, userGoal, userBodyFatPercentage)
+            
+            
+    }, [userSex, userGoal, userBodyFatPercentage]);
+
+    useEffect(() => {
+        console.log('rates:', availableUserRatesOfWeightChange)
+    }, [availableUserRatesOfWeightChange]);
+
+    // useEffect(() => {
+    //     console.log('sex', userSex)
+    //     console.log('bf', userBodyFatPercentage)
+    //     console.log('goal', userGoal)
+    // }, [userSex, userBodyFatPercentage, userGoal]);
+    
+    // useEffect(() => {
+    //     let weightChangeOptions = availableUserRatesOfWeightChange.length > 0
+    //         && availableUserRatesOfWeightChange.map((item, i) => {
+    //     return (
+    //         <option key={i} value={item.value}>{item.label}</option>
+    //     )
+    //     }, this);
+        
+    //     console.log(availableUserRatesOfWeightChange);
+    //     console.log(weightChangeOptions);
+        
+    // }, [availableUserRatesOfWeightChange]);
     
     // findAvailableUserRatesOfWeightChange(userSex, userGoal, userBodyFatPercentage)
 
@@ -109,13 +142,13 @@ const DailyCalorieCalculator = () => {
             <Select bg='white' placeholder="Select from dropdown"  mb={3} onChange={handleUserSexChange}>
                 <option value='Male'>Male</option>
                 <option value='Female'>Female</option>
-            <Text mb='8px'>Body Fat Percentage:</Text>
+            </Select>
+            <Text mb='8px'> Body Fat Percentage: </Text>
             <Input mb={3}  variant={"outlined"} value={userBodyFatPercentage} onChange={handleUserBodyFatPercentageChange}></Input>
             <Text mb='8px'>Maintenance Calories:</Text>
             <Input mb={3} variant={"outlined"} value={userMaintenanceCalories} onChange={handleUserMaintenanceCaloriesChange}></Input>
-            </Select>
             <Text mb='8px'>Your Goal:</Text>
-            <Select bg='white' placeholder="Select from dropdown"  mb={3} onChange={handleUserSexChange}>
+            <Select bg='white' placeholder="Select from dropdown"  mb={3} onChange={handleUserGoalChange}>
                 <option value='Gaining'>Gain Weight</option>
                 <option value='Dieting'>Lose Weight</option>
             </Select>
