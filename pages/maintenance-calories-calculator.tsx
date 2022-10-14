@@ -22,6 +22,7 @@ const MaintenanceCaloriesCalculator = () => {
     const [userRMR, setUserRMR] = React.useState<number>(0)
     const [userMaintenanceCalories, setUserMaintenanceCalories] = React.useState<number>(0)
 
+
     useEffect(() => {
             setUserRMR(calculateRMR(userSex, userBodyWeight, userHeightInCM, userAge))
     }, [userBodyWeight, userHeightInCM, userAge, userSex, userPhysicalActivityLevel]);
@@ -37,21 +38,21 @@ const MaintenanceCaloriesCalculator = () => {
             <meta />
         </Head>
         <Flex height={"50rem"} alignItems={"center"} justifyContent={"center"}>
-        <Flex direction={"column"} p={10} rounded={6} position={"relative"} background={"blackAlpha.100"} alignItems={"center"}>
-            <Heading mb={"5"}>Calculate Your Maintenance Calories</Heading>
+        <Flex direction={"column"} p={10} rounded={6} position={"relative"} alignItems={"center"}>
+            <Heading color={"white"}mb={"5"}>Calculate Your Maintenance Calories</Heading>
             <Flex direction={"column"} width="50%">
-            <Text alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
+            <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
             <Input  mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
-            <Text mb='8px'>Height in CM:</Text>
+            <Text color={"white"} mb='8px'>Height in CM:</Text>
             <Input mb={3}  variant={"outlined"} value={userHeightInCM} onChange={handleUserHeightChange}></Input>
-            <Text mb='8px'>Age:</Text>
+            <Text color={"white"} mb='8px'>Age:</Text>
             <Input mb={3} variant={"outlined"} value={userAge} onChange={handleUserAgeChange}></Input>
-            <Text mb='8px'>Sex:</Text>
+            <Text color={"white"} mb='8px'>Sex:</Text>
             <Select bg='white' placeholder="Select from dropdown"  mb={3} onChange={handleUserSexChange}>
                 <option value='Male'>Male</option>
                 <option value='Female'>Female</option>
             </Select>
-            <Text mb='8px'>Physical Activity Level:</Text>
+            <Text color={"white"} mb='8px'>Physical Activity Level:</Text>
             <Select minHeight={"4rem"} bg='white' placeholder="Select from dropdown" mb={3} onChange={handleUserPhysicalActivityLevelChange} whiteSpace="normal">
                 <option value='1'>I am sedentary and resistance train 3-6 days per week</option>
                 <option value='2'>I am lightly active and resistance train 3-6 days per week</option>
@@ -60,9 +61,9 @@ const MaintenanceCaloriesCalculator = () => {
             </Select>
             </Flex>
             <Divider mb={"3"} mt={"3"} orientation='horizontal' />
-            <Heading mb={"3"} size='lg'> Results</Heading>
-            <Text fontSize='lg'> Your Estimated Resting Metabolic Rate is: {userRMR}kcal</Text>
-            <Text fontSize='lg'> Your Estimated Maintenance Calories intake is: {userMaintenanceCalories}kcal</Text>
+            <Heading color={"white"} mb={"3"} size='lg'> Results</Heading>
+            <Text color={"white"} fontSize='lg'> Your Estimated Resting Metabolic Rate is: {userRMR}kcal</Text>
+            <Text color={"white"} fontSize='lg'> Your Estimated Maintenance Calories intake is: {userMaintenanceCalories}kcal</Text>
 
 
         </Flex>

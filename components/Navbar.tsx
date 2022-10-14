@@ -7,14 +7,14 @@ const Navbar = () => {
     return ( 
         <nav>
             <Flex flexDirection={"column"} justifyContent={"space-between"} >
-                <Flex mt={5} justifyContent={"center"}>
+                <Flex mt={5} mb={5}justifyContent={"center"}>
                 <Link href="/">
                     <a>
                         <Image src="/imperium.png" width={77} height={77}/>
                     </a>
                 </Link>
                 </Flex>
-                <Flex flexDirection={"row"} justifyContent={"space-around"}>
+                <Flex color={"white"} as='b'flexDirection={"row"} justifyContent={"space-around"}>
                     <Link href="/maintenance-calories-calculator"><a>Step 1: Calculate Maintenance Calories</a></Link>
                     <Link href="/daily-calorie-calculator"><a>Step 2: Set Rate of Progression</a></Link>
                     <Link href="/"><a>Step 3: Calculate Intake Recommendation</a></Link>

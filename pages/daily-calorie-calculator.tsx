@@ -44,9 +44,6 @@ const DailyCalorieCalculator = () => {
     }
 
     function findAvailableUserRatesOfWeightChange(sex: string, goal : string, bodyFatPercentage: number) {
-       if (sex != '' && goal != '' && bodyFatPercentage != 0){
-        console.log('entered function');
-        
            if(sex === "Male"){
                if (goal === "Gaining"){
                    setAvailableUserRatesOfWeightChange([weightChangeLegend["slowGain"], weightChangeLegend["mediumGain"], weightChangeLegend["fastGain"]])
@@ -81,9 +78,13 @@ const DailyCalorieCalculator = () => {
             }
         }
 
-    }
+    
 
     useEffect(() => {
+        if (userSex != '' && userGoal == 'Gaining') {    
+            findAvailableUserRatesOfWeightChange(userSex, userGoal, userBodyFatPercentage)
+        }
+        
         if (userSex != '' && userGoal != '' && userBodyFatPercentage != 0) {    
             findAvailableUserRatesOfWeightChange(userSex, userGoal, userBodyFatPercentage)
         }
@@ -91,7 +92,6 @@ const DailyCalorieCalculator = () => {
 
     
     useEffect(() => {
-        
         let weightChangeOptions = availableUserRatesOfWeightChange.map((item, i) => {
         return (
             <option key={i} value={item.value}>{item.label}</option>
@@ -99,25 +99,29 @@ const DailyCalorieCalculator = () => {
         }, this);
         setWeightChangeOptionDropdown(weightChangeOptions)
         
-        console.log('options:', weightChangeOptions);
-        
     }, [availableUserRatesOfWeightChange]);
     
 
-
+    useEffect(() => {
+        if (userBodyWeight != 0 && userMaintenanceCalories != 0){
+            if (userRateOfWeightChange === 0){
+                setUserDailyCalorieTarget(0)
+            }
+            else{
+                calculateDailyCalorieTarget(userBodyWeight, userMaintenanceCalories, userRateOfWeightChange)
+            }
+        }  
+    }, [userBodyWeight, userMaintenanceCalories, userRateOfWeightChange]);
+    
     function calculateDailyCalorieTarget(bodyWeightInKG: number, maintenanceCalorieIntake: number, rateOfWeightChange: number){
         const kcalsPerKG : number = 7700
         const goalWeightChange : number = bodyWeightInKG * rateOfWeightChange
         const monthlyCalorieDifference : number = goalWeightChange * kcalsPerKG
-        const dailyCalorieDifference : number = monthlyCalorieDifference / 30
+        const dailyCalorieDifference : number = monthlyCalorieDifference / 28
         const dailyCalorieTarget : number = maintenanceCalorieIntake + dailyCalorieDifference
         
-        setUserDailyCalorieTarget(dailyCalorieTarget)
+        setUserDailyCalorieTarget(Math.floor(dailyCalorieTarget))
     }
-
-    // calculateDailyCalorieTarget(userBodyWeight, userMaintenanceCalories, userRateOfWeightChange)
-
-
 
     return ( 
         <>
@@ -126,33 +130,33 @@ const DailyCalorieCalculator = () => {
             <meta />
         </Head>
         <Flex height={"50rem"} alignItems={"center"} justifyContent={"center"}>
-        <Flex direction={"column"} p={10} rounded={6} position={"relative"} background={"blackAlpha.100"} alignItems={"center"}>
-            <Heading mb={"5"}>Calculate Your Daily Calorie Target</Heading>
+        <Flex direction={"column"} p={10} rounded={6} position={"relative"} alignItems={"center"}>
+            <Heading color={"white"} mb={"5"}>Calculate Your Daily Calorie Target</Heading>
             <Flex direction={"column"} width="50%">
-            <Text alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
+            <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
             <Input  mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
-            <Text mb='8px'>Sex:</Text>
+            <Text color={"white"} mb='8px'>Sex:</Text>
             <Select bg='white' placeholder="Select from dropdown"  mb={3} onChange={handleUserSexChange}>
                 <option value='Male'>Male</option>
                 <option value='Female'>Female</option>
             </Select>
-            <Text mb='8px'> Body Fat Percentage: </Text>
+            <Text color={"white"} mb='8px'> Body Fat Percentage: </Text>
             <Input mb={3}  variant={"outlined"} value={userBodyFatPercentage} onChange={handleUserBodyFatPercentageChange}></Input>
-            <Text mb='8px'>Maintenance Calories:</Text>
+            <Text color={"white"} mb='8px'>Maintenance Calories:</Text>
             <Input mb={3} variant={"outlined"} value={userMaintenanceCalories} onChange={handleUserMaintenanceCaloriesChange}></Input>
-            <Text mb='8px'>Your Goal:</Text>
+            <Text color={"white"} mb='8px'>Your Goal:</Text>
             <Select bg='white' placeholder="Select from dropdown"  mb={3} onChange={handleUserGoalChange}>
-                <option value='Gaining'>Gain Weight</option>
-                <option value='Dieting'>Lose Weight</option>
+                <option value='Gaining'>Lean Gaining</option>
+                <option value='Dieting'>Dieting</option>
             </Select>
-            <Text mb='8px'>Target Rate of Weight Change:</Text>
+            <Text color={"white"} mb='8px'>Target Rate of Weight Change:</Text>
             <Select bg='white' placeholder="Select from dropdown" mb={3} onChange={handleUserRatesOfWeightChangeChange} whiteSpace="normal">
                 {weightChangeOptionDropdown}
             </Select>
             </Flex>
             <Divider mb={"3"} mt={"3"} orientation='horizontal' />
-            <Heading mb={"3"} size='lg'> Results</Heading>
-            <Text fontSize='lg'> Your Daily Calorie Target is: {userDailyCalorieTarget}kcal</Text>
+            <Heading color={"white"} mb={"3"} size='lg'> Results</Heading>
+            <Text color={"white"} fontSize='lg'> Your Daily Calorie Target is: {userDailyCalorieTarget}kcal</Text>
             {/* <Text fontSize='lg'> Your target monthly weight change is: {} kcal</Text> */}
 
 
