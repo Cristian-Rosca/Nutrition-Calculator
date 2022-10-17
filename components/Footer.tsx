@@ -1,8 +1,10 @@
+import {Box} from "@chakra-ui/react"
+
 const Footer = () => {
     return ( 
-        <div>
-            Copyright {new Date().getFullYear()} Imperium Coaching
-        </div>
+        <Box display={"flex"} justifyContent={"flex-start"} color={"white"} alignItems={"end"} m={5}>
+        {new Date().getFullYear()} Imperium Coaching&trade;. All Rights Reserved.
+        </Box>
      );
 }
  

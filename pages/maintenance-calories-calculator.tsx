@@ -1,5 +1,5 @@
 import Head from "next/head";
-import {Flex , Heading, Input, Divider, Text, Select} from "@chakra-ui/react"
+import {Flex , Heading, Input, Divider, Text, Select, Box} from "@chakra-ui/react"
 import React, { useEffect } from "react";
 
 const MaintenanceCaloriesCalculator = () => {
@@ -37,10 +37,10 @@ const MaintenanceCaloriesCalculator = () => {
             <title>Nutrition Tool | Maintenance Calorie Calculator</title>
             <meta />
         </Head>
-        <Flex height={"50rem"} alignItems={"center"} justifyContent={"center"}>
-        <Flex direction={"column"} p={10} rounded={6} position={"relative"} alignItems={"center"}>
+        <Box display={"flex"} height={"50rem"}  justifyContent={"center"}>
+        <Box display={"flex"} flexDirection={"column"} p={10} rounded={6} position={"relative"} alignItems={"center"}>
             <Heading color={"white"}mb={"5"}>Calculate Your Maintenance Calories</Heading>
-            <Flex direction={"column"} width="50%">
+            <Box display={"flex"} flexDirection={"column"} width="50%">
             <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
             <Input  mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
             <Text color={"white"} mb='8px'>Height in CM:</Text>
@@ -59,16 +59,16 @@ const MaintenanceCaloriesCalculator = () => {
                 <option value='3'>I am relatively active and resistance train 3-6 days per week</option>
                 <option value='4'>I am very active and resistance train 3-6 days per week</option>
             </Select>
-            </Flex>
+            </Box>
             <Divider mb={"3"} mt={"3"} orientation='horizontal' />
             <Heading color={"white"} mb={"3"} size='lg'> Results</Heading>
             <Text color={"white"} fontSize='lg'> Your Estimated Resting Metabolic Rate is: {userRMR}kcal</Text>
             <Text color={"white"} fontSize='lg'> Your Estimated Maintenance Calories intake is: {userMaintenanceCalories}kcal</Text>
 
 
-        </Flex>
+        </Box>
         
-        </Flex>
+        </Box>
         </>
      );
 }

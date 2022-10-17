@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { Divider, Flex, Heading, Input, Select, Text, } from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, Heading, Input, Select, Text, } from "@chakra-ui/react";
 import Head from "next/head";
+import Image from "next/image";
+import bodyFatGuide from "../public/body-fat-guide.png"
 
 const DailyCalorieCalculator = () => {
 
@@ -33,6 +35,17 @@ const DailyCalorieCalculator = () => {
 
     const [userDailyCalorieTarget, setUserDailyCalorieTarget] = React.useState<number>(0)
 
+    const [displayBodyFatGuide, setDisplayBodyFatGuide] = React.useState<boolean>(false)
+
+
+    function handleToggleBodyFatGuideClick () {
+        if (displayBodyFatGuide == false){
+            setDisplayBodyFatGuide(true)
+        }
+        else {
+            setDisplayBodyFatGuide(false)
+        }
+    }
 
     const weightChangeLegend = {
         "slowGain" : {label : "Gain 0.5% of your body weight per month (Advanced Trainees)", value : 0.005},
@@ -123,16 +136,19 @@ const DailyCalorieCalculator = () => {
         setUserDailyCalorieTarget(Math.floor(dailyCalorieTarget))
     }
 
+    
+
+
     return ( 
         <>
         <Head>
             <title>Nutrition Tool | Maintenance Calorie Calculator</title>
             <meta />
         </Head>
-        <Flex height={"50rem"} alignItems={"center"} justifyContent={"center"}>
-        <Flex direction={"column"} p={10} rounded={6} position={"relative"} alignItems={"center"}>
+        <Box display={"flex"} height={"50rem"} justifyContent={"center"} >
+        <Box display={"flex"} flexDirection={"column"} p={10} rounded={6} position={"relative"} alignItems={"center"}>
             <Heading color={"white"} mb={"5"}>Calculate Your Daily Calorie Target</Heading>
-            <Flex direction={"column"} width="50%">
+            <Box display={"flex"} flexDirection={"column"} width="50%">
             <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
             <Input  mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
             <Text color={"white"} mb='8px'>Sex:</Text>
@@ -142,6 +158,12 @@ const DailyCalorieCalculator = () => {
             </Select>
             <Text color={"white"} mb='8px'> Body Fat Percentage: </Text>
             <Input mb={3}  variant={"outlined"} value={userBodyFatPercentage} onChange={handleUserBodyFatPercentageChange}></Input>
+                <Button mb={3} justifyContent={"center"} variant={"link"} onClick={handleToggleBodyFatGuideClick} fontSize='sm'> {displayBodyFatGuide ? "Hide body fat guide" : "Click to show body fat guide"} </Button>
+            </Box>
+            {displayBodyFatGuide ? <Box mb={3} display={"flex"} justifyContent={"center"} flexDirection={"column"} alignItems={"center"}>
+                 <Image src={bodyFatGuide} width={"950px"} height={"225px"}/> 
+            </Box>  : "" } 
+            <Box display={"flex"} flexDirection={"column"} width="50%">
             <Text color={"white"} mb='8px'>Maintenance Calories:</Text>
             <Input mb={3} variant={"outlined"} value={userMaintenanceCalories} onChange={handleUserMaintenanceCaloriesChange}></Input>
             <Text color={"white"} mb='8px'>Your Goal:</Text>
@@ -153,16 +175,20 @@ const DailyCalorieCalculator = () => {
             <Select bg='white' placeholder="Select from dropdown" mb={3} onChange={handleUserRatesOfWeightChangeChange} whiteSpace="normal">
                 {weightChangeOptionDropdown}
             </Select>
-            </Flex>
+            </Box>
+            <Box display={"flex"} flexDirection={"column"} width="50%" alignItems={"center"}>
             <Divider mb={"3"} mt={"3"} orientation='horizontal' />
             <Heading color={"white"} mb={"3"} size='lg'> Results</Heading>
             <Text color={"white"} fontSize='lg'> Your Daily Calorie Target is: {userDailyCalorieTarget}kcal</Text>
             {/* <Text fontSize='lg'> Your target monthly weight change is: {} kcal</Text> */}
+            <Divider mb={"3"} mt={"3"} orientation='horizontal' />
+            </Box>
 
 
-        </Flex>
+        </Box>
+        </Box>
         
-        </Flex>
+        
         </>
      );
 }
