@@ -60,10 +60,11 @@ const MaintenanceCaloriesCalculator = () => {
                 <option value='4'>I am very active and resistance train 3-6 days per week</option>
             </Select>
             </Box>
-            <Divider mb={"3"} mt={"3"} orientation='horizontal' />
+            <Divider width={"50%"} mb={"3"} mt={"3"} orientation='horizontal' />
             <Heading color={"white"} mb={"3"} size='lg'> Results</Heading>
             <Text color={"white"} fontSize='lg'> Your Estimated Resting Metabolic Rate is: {userRMR}kcal</Text>
             <Text color={"white"} fontSize='lg'> Your Estimated Maintenance Calories intake is: {userMaintenanceCalories}kcal</Text>
+            <Divider width={"50%"} mb={"3"} mt={"5"} orientation='horizontal' />
 
 
         </Box>

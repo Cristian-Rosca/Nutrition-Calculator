@@ -17,8 +17,8 @@ const Navbar = () => {
                 </Box>
                 <Box display={"flex"} color={"white"} as='b'flexDirection={"row"} justifyContent={"space-around"}>
                     <Link href="/maintenance-calories-calculator"><a>Step 1: Calculate Maintenance Calories</a></Link>
-                    <Link href="/daily-calorie-calculator"><a>Step 2: Set Rate of Progression</a></Link>
-                    <Link href="/"><a>Step 3: Calculate Intake Recommendation</a></Link>
+                    <Link href="/daily-calorie-calculator"><a>Step 2: Calculate Daily Calories</a></Link>
+                    <Link href="/macro-calculator"><a>Step 3: Calculate Daily Macros</a></Link>
                     <Link href="/"><a>Step 4: Calculate Refeed Intake</a></Link>
                     <Link href="/"><a>Troubleshooting Nutrition Targets</a></Link>
                 </Box>
