@@ -1,6 +1,7 @@
 import { Box, Button, Divider, Heading, Input, Select, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect } from "react";
+import Footer from "../components/Footer";
 
 const MacroCalculator = () => {
     const [userBodyWeight, setUserBodyWeight] = React.useState<number>(0)
@@ -77,7 +78,7 @@ const MacroCalculator = () => {
                 <title>Nutrition Tool | Maintenance Calculator</title>
                 <meta />
             </Head>
-            <Box display={"flex"} height={"50rem"} justifyContent={"center"}>
+            <Box display={"flex"} height={"50rem"} justifyContent={"center"} >
                 <Box display={"flex"} flexDirection={"column"} p={10} rounded={6} position={"relative"} alignItems={"center"}>
                     <Heading color={"white"} mb={"5"}>Calculate Daily Macro Target</Heading>
                     <Box display={"flex"} flexDirection={"column"} width="50%">
@@ -110,6 +111,13 @@ const MacroCalculator = () => {
                     <Divider mb={"3"} mt={"3"} orientation='horizontal' />
                 </Box>
             </Box>
+            {/*
+            footer issue workaround
+            */}
+            {/* <Box mt={"10rem"}>
+
+            <Footer />
+            </Box> */}
 
 
         </>
