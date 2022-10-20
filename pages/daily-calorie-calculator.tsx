@@ -5,7 +5,7 @@ import Image from "next/image";
 import bodyFatGuide from "../public/body-fat-guide.png"
 
 const DailyCalorieCalculator = () => {
-
+   
     interface RateOfWeightChange {
         label : string,
         value : number
@@ -30,8 +30,8 @@ const DailyCalorieCalculator = () => {
     
     const [weightChangeOptionDropdown, setWeightChangeOptionDropdown] = React.useState<JSX.Element[]>([])
 
-    const [userRateOfWeightChange, setUserRatesOfWeightChange] = React.useState<number>(0)
-    const handleUserRatesOfWeightChangeChange = (e : React.ChangeEvent<HTMLSelectElement>) => setUserRatesOfWeightChange(Number(e.target.value))
+    const [userRateOfWeightChange, setUserRateOfWeightChange] = React.useState<number>(0)
+    const handleUserRatesOfWeightChangeChange = (e : React.ChangeEvent<HTMLSelectElement>) => setUserRateOfWeightChange(Number(e.target.value))
 
     const [userDailyCalorieTarget, setUserDailyCalorieTarget] = React.useState<number>(0)
 
@@ -136,7 +136,52 @@ const DailyCalorieCalculator = () => {
         setUserDailyCalorieTarget(Math.floor(dailyCalorieTarget))
     }
 
-    
+
+    // localStorage 
+    useEffect(() => {
+        const userBodyWeight = window.localStorage.getItem('userBodyWeight');
+        if ( userBodyWeight !== null ) setUserBodyWeight(JSON.parse(userBodyWeight));
+        
+        const userSex = window.localStorage.getItem('userSex');
+        if ( userSex !== null ) setUserSex(JSON.parse(userSex));
+        
+        const userMaintenanceCalories = window.localStorage.getItem('userMaintenanceCalories');
+        if ( userMaintenanceCalories !== null ) setUserMaintenanceCalories(JSON.parse(userMaintenanceCalories));
+
+        const userBodyFatPercentage = window.localStorage.getItem('userBodyFatPercentage');
+        if ( userBodyFatPercentage !== null ) setUserBodyFatPercentage(JSON.parse(userBodyFatPercentage));
+
+        const userGoal = window.localStorage.getItem('userGoal');
+        if ( userGoal !== null ) setUserGoal(JSON.parse(userGoal));
+
+        const userRateOfWeightChange = window.localStorage.getItem('userRateOfWeightChange');
+        if ( userRateOfWeightChange !== null ) setUserRateOfWeightChange(JSON.parse(userRateOfWeightChange));
+
+      }, []);
+
+      useEffect(() => {
+        window.localStorage.setItem('userBodyWeight', JSON.stringify(userBodyWeight));
+      }, [userBodyWeight]);
+
+      useEffect(() => {
+        window.localStorage.setItem('userSex', JSON.stringify(userSex));
+      }, [userSex]);
+
+      useEffect(() => {
+        window.localStorage.setItem('userBodyFatPercentage', JSON.stringify(userBodyFatPercentage));
+      }, [userBodyFatPercentage]);
+
+      useEffect(() => {
+        window.localStorage.setItem('userGoal', JSON.stringify(userGoal));
+      }, [userGoal]);
+
+      useEffect(() => {
+        window.localStorage.setItem('userRateOfWeightChange', JSON.stringify(userRateOfWeightChange));
+      }, [userRateOfWeightChange]);
+
+      useEffect(() => {
+        window.localStorage.setItem('userDailyCalorieTarget', JSON.stringify(userDailyCalorieTarget));
+      }, [userDailyCalorieTarget]);
 
 
     return ( 
@@ -152,7 +197,7 @@ const DailyCalorieCalculator = () => {
             <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
             <Input  mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
             <Text color={"white"} mb='8px'>Sex:</Text>
-            <Select bg='white' placeholder="Select from dropdown"  mb={3} onChange={handleUserSexChange}>
+            <Select bg='white' placeholder="Select from dropdown" value={userSex}  mb={3} onChange={handleUserSexChange}>
                 <option value='Male'>Male</option>
                 <option value='Female'>Female</option>
             </Select>
@@ -167,22 +212,22 @@ const DailyCalorieCalculator = () => {
             <Text color={"white"} mb='8px'>Maintenance Calories:</Text>
             <Input mb={3} variant={"outlined"} value={userMaintenanceCalories} onChange={handleUserMaintenanceCaloriesChange}></Input>
             <Text color={"white"} mb='8px'>Your Goal:</Text>
-            <Select bg='white' placeholder="Select from dropdown"  mb={3} onChange={handleUserGoalChange}>
+            <Select bg='white' placeholder={"Select from dropdown"} value={userGoal}  mb={3} onChange={handleUserGoalChange}>
                 <option value='Gaining'>Lean Gaining</option>
                 <option value='Dieting'>Dieting</option>
             </Select>
             <Text color={"white"} mb='8px'>Target Rate of Weight Change:</Text>
-            <Select bg='white' placeholder="Select from dropdown" mb={3} onChange={handleUserRatesOfWeightChangeChange} whiteSpace="normal">
+            <Select minHeight={"4rem"} bg='white' placeholder="Select from dropdown" value={userRateOfWeightChange} mb={3} onChange={handleUserRatesOfWeightChangeChange} whiteSpace="normal">
                 {weightChangeOptionDropdown}
             </Select>
             </Box>
             <Box display={"flex"} flexDirection={"column"} width="50%" alignItems={"center"}>
             <Divider mb={"3"} mt={"3"} orientation='horizontal' />
             <Heading color={"white"} mb={"3"} size='lg'> Results</Heading>
+            </Box>
             <Text color={"white"} fontSize='lg'> Your Daily Calorie Target is: {userDailyCalorieTarget}kcal</Text>
             {/* <Text fontSize='lg'> Your target monthly weight change is: {} kcal</Text> */}
-            <Divider mb={"3"} mt={"3"} orientation='horizontal' />
-            </Box>
+            <Divider mb={"3"} mt={"3"} orientation='horizontal' width="50%" />
 
 
         </Box>
