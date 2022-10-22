@@ -1,6 +1,6 @@
 import Head from "next/head";
 import {Flex , Heading, Input, Divider, Text, Select, Box} from "@chakra-ui/react"
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DailyCalorieCalculator from "./daily-calorie-calculator";
 
 const MaintenanceCaloriesCalculator = () => {
@@ -68,58 +68,81 @@ const MaintenanceCaloriesCalculator = () => {
         return Math.floor(maintenanceCalories)
     }
 
-    // localStorage 
-    useEffect(() => {
-        const userBodyWeight = window.localStorage.getItem('userBodyWeight');
-        if ( userBodyWeight !== null ) setUserBodyWeight(JSON.parse(userBodyWeight));
+    
+    interface User {
+        stats : {
+            userBodyWeight : number,
+            userHeightInCM : number,
+            userAge : number,
+            userSex : string,
+            userPhysicalActivityLevel : number,
+            userRMR : number, 
+            userMaintenanceCalories : number
+            userBodyFatPercentage : number
+        },
+    }
+    
+    const [user, setUser] = React.useState<User>({ stats : {
+        userBodyWeight : 0,
+        userHeightInCM : 0,
+        userAge : 0,
+        userSex : '',
+        userPhysicalActivityLevel : 0,
+        userRMR : 0, 
+        userMaintenanceCalories : 0,
+        userBodyFatPercentage : 0
+    }})
 
-        const userHeightInCM = window.localStorage.getItem('userHeightInCM');
-        if ( userHeightInCM !== null ) setUserHeightInCM(JSON.parse(userHeightInCM));
-        
-        const userAge = window.localStorage.getItem('userAge');
-        if ( userAge !== null ) setUserAge(JSON.parse(userAge));
-        
-        const userSex = window.localStorage.getItem('userSex');
-        if ( userSex !== null ) setUserSex(JSON.parse(userSex));
-        
-        const userPhysicalActivityLevel = window.localStorage.getItem('userPhysicalActivityLevel');
-        if ( userPhysicalActivityLevel !== null ) setUserPhysicalActivityLevel(JSON.parse(userPhysicalActivityLevel));
-        
-        const userRMR = window.localStorage.getItem('userRMR');
-        if ( userRMR !== null ) setUserRMR(JSON.parse(userRMR));
-        
-        const userMaintenanceCalories = window.localStorage.getItem('userMaintenanceCalories');
-        if ( userMaintenanceCalories !== null ) setUserMaintenanceCalories(JSON.parse(userMaintenanceCalories));
+   
+    
+    
+    
+    useEffect(() => {
+        const data = window.localStorage.getItem('User');
+        if (data) {
+            let lsUser= JSON.parse(data)
+            setUser(lsUser)
+                setUserBodyWeight(Number(lsUser.stats.userBodyWeight))
+                setUserHeightInCM(lsUser.stats.userHeightInCM)
+                setUserAge(lsUser.stats.userAge)
+                setUserSex(lsUser.stats.userSex)
+                setUserPhysicalActivityLevel(lsUser.stats.userPhysicalActivityLevel)
+                lsUser.stats.userRMR ? setUserRMR(lsUser.stats.userRMR) : ""
+                lsUser.stats.userMaintenanceCalories ? setUserRMR(lsUser.stats.userMaintenanceCalories) : ""
+        }
       }, []);
     
-      useEffect(() => {
-        window.localStorage.setItem('userBodyWeight', JSON.stringify(userBodyWeight));
-      }, [userBodyWeight]);
-
-      useEffect(() => {
-        window.localStorage.setItem('userHeightInCM', JSON.stringify(userHeightInCM));
-      }, [userHeightInCM]);
+    interface Stats {
+        userBodyWeight : number,
+        userHeightInCM : number,
+        userAge : number,
+        userSex : string,
+        userPhysicalActivityLevel : number,
+        userRMR : number, 
+        userMaintenanceCalories : number
+        userBodyFatPercentage : number
+    }
     
-      useEffect(() => {
-        window.localStorage.setItem('userAge', JSON.stringify(userAge));
-      }, [userAge]);
-
-      useEffect(() => {
-        window.localStorage.setItem('userSex', JSON.stringify(userSex));
-      }, [userSex]);
     
-      useEffect(() => {
-        window.localStorage.setItem('userPhysicalActivityLevel', JSON.stringify(userPhysicalActivityLevel));
-      }, [userPhysicalActivityLevel]);
+    const userStats : Stats = {
+        userBodyWeight : userBodyWeight,
+        userHeightInCM : userHeightInCM,
+        userAge : userAge,
+        userSex : userSex,
+        userPhysicalActivityLevel : userPhysicalActivityLevel,
+        userRMR : userRMR, 
+        userMaintenanceCalories : userMaintenanceCalories,
+        userBodyFatPercentage : user.stats.userBodyFatPercentage
+    }
+    
+    
+    useEffect(() => {
+            user.stats = userStats
+            window.localStorage.setItem('User', JSON.stringify(user));
+      }, [userStats]);
+    
 
-      useEffect(() => {
-        window.localStorage.setItem('userRMR', JSON.stringify(userRMR));
-      }, [userRMR]);
-
-      useEffect(() => {
-        window.localStorage.setItem('userMaintenanceCalories', JSON.stringify(userMaintenanceCalories));
-      }, [userMaintenanceCalories]);
-      
+    
 
     return ( 
         <>

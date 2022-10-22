@@ -137,53 +137,73 @@ const DailyCalorieCalculator = () => {
     }
 
 
-    // localStorage 
+    interface User {
+        stats : {
+            userBodyWeight : number,
+            userHeightInCM : number,
+            userAge : number,
+            userSex : string,
+            userPhysicalActivityLevel : number,
+            userRMR : number, 
+            userMaintenanceCalories : number
+            userBodyFatPercentage : number
+        },
+    }
+    
+    const [user, setUser] = React.useState<User>({ stats : {
+        userBodyWeight : 0,
+        userHeightInCM : 0,
+        userAge : 0,
+        userSex : '',
+        userPhysicalActivityLevel : 0,
+        userRMR : 0, 
+        userMaintenanceCalories : 0,
+        userBodyFatPercentage : 0
+    }})
+    
+    
+    
     useEffect(() => {
-        const userBodyWeight = window.localStorage.getItem('userBodyWeight');
-        if ( userBodyWeight !== null ) setUserBodyWeight(JSON.parse(userBodyWeight));
-        
-        const userSex = window.localStorage.getItem('userSex');
-        if ( userSex !== null ) setUserSex(JSON.parse(userSex));
-        
-        const userMaintenanceCalories = window.localStorage.getItem('userMaintenanceCalories');
-        if ( userMaintenanceCalories !== null ) setUserMaintenanceCalories(JSON.parse(userMaintenanceCalories));
-
-        const userBodyFatPercentage = window.localStorage.getItem('userBodyFatPercentage');
-        if ( userBodyFatPercentage !== null ) setUserBodyFatPercentage(JSON.parse(userBodyFatPercentage));
-
-        const userGoal = window.localStorage.getItem('userGoal');
-        if ( userGoal !== null ) setUserGoal(JSON.parse(userGoal));
-
-        const userRateOfWeightChange = window.localStorage.getItem('userRateOfWeightChange');
-        if ( userRateOfWeightChange !== null ) setUserRateOfWeightChange(JSON.parse(userRateOfWeightChange));
-
+        const data = window.localStorage.getItem('User');
+        if (data) {
+            let lsUser= JSON.parse(data)
+            setUser(lsUser)
+            setUserBodyWeight(Number(lsUser.stats.userBodyWeight))
+            setUserSex(lsUser.stats.userSex)
+            setUserBodyFatPercentage(lsUser.stats.userBodyFatPercentage)
+            setUserMaintenanceCalories(lsUser.stats.userMaintenanceCalories)
+        }
       }, []);
-
-      useEffect(() => {
-        window.localStorage.setItem('userBodyWeight', JSON.stringify(userBodyWeight));
-      }, [userBodyWeight]);
-
-      useEffect(() => {
-        window.localStorage.setItem('userSex', JSON.stringify(userSex));
-      }, [userSex]);
-
-      useEffect(() => {
-        window.localStorage.setItem('userBodyFatPercentage', JSON.stringify(userBodyFatPercentage));
-      }, [userBodyFatPercentage]);
-
-      useEffect(() => {
-        window.localStorage.setItem('userGoal', JSON.stringify(userGoal));
-      }, [userGoal]);
-
-      useEffect(() => {
-        window.localStorage.setItem('userRateOfWeightChange', JSON.stringify(userRateOfWeightChange));
-      }, [userRateOfWeightChange]);
-
-      useEffect(() => {
-        window.localStorage.setItem('userDailyCalorieTarget', JSON.stringify(userDailyCalorieTarget));
-      }, [userDailyCalorieTarget]);
-
-
+    
+    interface Stats {
+        userBodyWeight : number,
+        userHeightInCM : number,
+        userAge : number,
+        userSex : string,
+        userPhysicalActivityLevel : number,
+        userRMR : number, 
+        userMaintenanceCalories : number
+        userBodyFatPercentage : number
+    }
+    
+    
+    const userStats : Stats = {
+        userBodyWeight : userBodyWeight,
+    userHeightInCM : user.stats.userHeightInCM,
+    userAge : user.stats.userAge,
+    userSex : userSex,
+    userPhysicalActivityLevel : user.stats.userPhysicalActivityLevel,
+    userRMR : user.stats.userRMR, 
+    userMaintenanceCalories : userMaintenanceCalories,
+    userBodyFatPercentage : userBodyFatPercentage
+    }
+    
+    
+    useEffect(() => {
+            user.stats = userStats
+            window.localStorage.setItem('User', JSON.stringify(user));
+      }, [userStats]);
+   
     return ( 
         <>
         <Head>

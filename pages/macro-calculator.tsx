@@ -71,6 +71,72 @@ const MacroCalculator = () => {
         
     }, [userBodyWeight, userDailyCalorieTarget, userGoal, userProteinPerKG, userPercentageOfFats, userFibrePer1000kcal]);
 
+    interface User {
+        stats : {
+            userBodyWeight : number,
+            userHeightInCM : number,
+            userAge : number,
+            userSex : string,
+            userPhysicalActivityLevel : number,
+            userRMR : number, 
+            userMaintenanceCalories : number
+            userBodyFatPercentage : number
+        },
+    }
+    
+    const [user, setUser] = React.useState<User>({ stats : {
+        userBodyWeight : 0,
+        userHeightInCM : 0,
+        userAge : 0,
+        userSex : '',
+        userPhysicalActivityLevel : 0,
+        userRMR : 0, 
+        userMaintenanceCalories : 0,
+        userBodyFatPercentage : 0
+    }})
+    
+    
+    
+    useEffect(() => {
+        const data = window.localStorage.getItem('User');
+        if (data) {
+            let lsUser= JSON.parse(data)
+            setUser(lsUser)
+            setUserBodyWeight(Number(lsUser.stats.userBodyWeight))
+            setUserGoal(lsUser.stats.userGoal)
+        }
+      }, []);
+    
+    interface Stats {
+        userBodyWeight : number,
+        userHeightInCM : number,
+        userAge : number,
+        userSex : string,
+        userPhysicalActivityLevel : number,
+        userRMR : number, 
+        userMaintenanceCalories : number
+        userBodyFatPercentage : number
+    }
+    
+    
+    const userStats : Stats = {
+        userBodyWeight : userBodyWeight,
+        userHeightInCM : user.stats.userHeightInCM,
+        userAge : user.stats.userAge,
+        userSex : user.stats.userSex,
+        userPhysicalActivityLevel : user.stats.userPhysicalActivityLevel,
+        userRMR : user.stats.userRMR, 
+        userMaintenanceCalories : user.stats.userMaintenanceCalories,
+        userBodyFatPercentage : user.stats.userBodyFatPercentage
+    }
+    
+    
+    useEffect(() => {
+            user.stats = userStats
+            window.localStorage.setItem('User', JSON.stringify(user));
+      }, [userStats]);
+
+
 
     return (
         <>
