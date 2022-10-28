@@ -144,7 +144,7 @@ const MacroCalculator = () => {
                 <title>Nutrition Tool | Maintenance Calculator</title>
                 <meta />
             </Head>
-            <Box display={"flex"} height={"50rem"} justifyContent={"center"} >
+            <Box display={"flex"} justifyContent={"center"} >
                 <Box display={"flex"} flexDirection={"column"} p={10} rounded={6} position={"relative"} alignItems={"center"}>
                     <Heading color={"white"} mb={"5"}>Calculate Daily Macro Target</Heading>
                     <Box display={"flex"} flexDirection={"column"} width="50%">
