@@ -183,9 +183,8 @@ const MaintenanceCaloriesCalculator = () => {
                         <Heading color={"white"} mb={"5"}>Calculate Your Maintenance Calories </Heading>
                     </Box>
                     <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} mt={"2rem"} mb={"2rem"}>
-
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"}>
-                            <Box maxWidth={"55%"} >
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} alignItems={"center"} ml={"10rem"}>
+                            <Box  display={"flex"} flexDirection={"column"} width={"17rem"}>
                                 <Text color={"white"} mb='8px'>Body Weight in KG:</Text>
                                 <Input rounded={8} mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
                                 <Text color={"white"} mb='8px'>Height in CM:</Text>
@@ -204,9 +203,9 @@ const MaintenanceCaloriesCalculator = () => {
                                     <option value='3'>I am relatively active and resistance train 3-6 days per week</option>
                                     <option value='4'>I am very active and resistance train 3-6 days per week</option>
                                 </Select>
-                            </Box>
+                                </Box>
                         </Box>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} flex={1} mr={"10rem"}>
 
                             <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Maintenance Calorie Intake ⚡️</Heading>
                             <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
