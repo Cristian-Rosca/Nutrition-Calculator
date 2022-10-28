@@ -3,6 +3,8 @@ import { Box, Button, Divider, Flex, Heading, Input, Select, Text, } from "@chak
 import Head from "next/head";
 import Image from "next/image";
 import bodyFatGuide from "../public/body-fat-guide.png"
+import { Step, Steps, useSteps } from 'chakra-ui-steps';
+import { useRouter } from 'next/router';
 
 const DailyCalorieCalculator = () => {
    
@@ -203,6 +205,32 @@ const DailyCalorieCalculator = () => {
             user.stats = userStats
             window.localStorage.setItem('User', JSON.stringify(user));
       }, [userStats]);
+
+      const router = useRouter()
+
+      const steps = [
+        { label: 'Step 1' },
+        { label: 'Step 2' },
+        { label: 'Step 3' },
+        { label: 'Step 4' }
+    ];
+
+    
+        const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
+            initialStep: 1,
+        })
+
+        function handlePrevClick() {
+            prevStep
+            router.push('/maintenance-calories-calculator')
+        }
+
+        function handleNextClick() {
+            nextStep
+            router.push('/macro-calculator')
+        }
+
+
    
     return ( 
         <>
@@ -252,6 +280,43 @@ const DailyCalorieCalculator = () => {
 
         </Box>
         </Box>
+        <Box display={"flex"} justifyContent={"center"}>
+                    <Box display={"flex"} flexDirection="column" width="50%" justifyContent={"flex-start"} >
+                        <Box display={"flex"} justifyContent={"center"}>
+                        <Steps activeStep={activeStep} >
+                            {steps.map(({ label}) => (
+                                <Step  label={label} key={label}>
+                                    
+                                </Step>
+                            ))}
+                        </Steps>
+                        </Box>
+                        {activeStep === steps.length ? (
+                            <Box display={"flex"} p={4}>
+                                <Button bg={"white"} mx="auto" size="sm" onClick={reset}>
+                                    Reset
+                                </Button>
+                            </Box>
+                        ) : (
+                            <Box display={"flex"} justifyContent={"end"} m={5}>
+                                <Button
+                                    bg={"white"}
+                                    isDisabled={activeStep === 0}
+                                    mr={2}
+                                    onClick={handlePrevClick}
+                                    size="sm"
+                                    variant="ghost"
+                                >
+                                    Prev
+                                </Button>
+                                <Button size="sm" onClick={handleNextClick}>
+                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                </Button>
+                            </Box>
+                        )}
+                    </Box>
+                    </Box>
+                    
         
         
         </>

@@ -1,7 +1,8 @@
-import { Box, Button, Divider, Heading, Input, Select, Text } from "@chakra-ui/react";
+import { Box, Button, Divider, Heading, Input, Select, Text, Flex } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect } from "react";
-import Footer from "../components/Footer";
+import { Step, Steps, useSteps } from 'chakra-ui-steps';
+import { useRouter } from 'next/router';
 
 const MacroCalculator = () => {
     const [userBodyWeight, setUserBodyWeight] = React.useState<number>(0)
@@ -136,6 +137,29 @@ const MacroCalculator = () => {
             window.localStorage.setItem('User', JSON.stringify(user));
       }, [userStats]);
 
+      const router = useRouter()
+
+      const steps = [
+        { label: 'Step 1' },
+        { label: 'Step 2' },
+        { label: 'Step 3' },
+        { label: 'Step 4' }
+    ];
+
+    
+        const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
+            initialStep: 2,
+        })
+
+        function handlePrevClick() {
+            prevStep
+            router.push('/daily-calorie-calculator')
+        }
+
+        function handleNextClick() {
+            nextStep
+            router.push('/refeed-calculator')
+        }
 
 
     return (
@@ -177,13 +201,44 @@ const MacroCalculator = () => {
                     <Divider mb={"3"} mt={"3"} orientation='horizontal' />
                 </Box>
             </Box>
-            {/*
-            footer issue workaround
-            */}
-            {/* <Box mt={"10rem"}>
 
-            <Footer />
-            </Box> */}
+            <Box display={"flex"} justifyContent={"center"}>
+                    <Box display={"flex"} flexDirection="column" width="50%" justifyContent={"flex-start"} >
+                        <Box display={"flex"} justifyContent={"center"}>
+                        <Steps activeStep={activeStep} >
+                            {steps.map(({ label}) => (
+                                <Step  label={label} key={label}>
+                                    
+                                </Step>
+                            ))}
+                        </Steps>
+                        </Box>
+                        {activeStep === steps.length ? (
+                            <Box display={"flex"} p={4}>
+                                <Button bg={"white"} mx="auto" size="sm" onClick={reset}>
+                                    Reset
+                                </Button>
+                            </Box>
+                        ) : (
+                            <Box display={"flex"} justifyContent={"end"} m={5}>
+                                <Button
+                                    bg={"white"}
+                                    isDisabled={activeStep === 0}
+                                    mr={2}
+                                    onClick={handlePrevClick}
+                                    size="sm"
+                                    variant="ghost"
+                                >
+                                    Prev
+                                </Button>
+                                <Button size="sm" onClick={handleNextClick}>
+                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                </Button>
+                            </Box>
+                        )}
+                    </Box>
+                    </Box>
+           
 
 
         </>
