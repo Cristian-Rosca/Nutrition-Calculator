@@ -179,7 +179,7 @@ const MaintenanceCaloriesCalculator = () => {
                 </Head>
 
                 <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-                    <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} mt={"3rem"}>
+                    <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} >
                         <Heading color={"white"} mb={"5"}>Calculate Your Maintenance Calories </Heading>
                     </Box>
                     <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} mt={"2rem"} mb={"2rem"}>

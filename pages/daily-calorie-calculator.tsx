@@ -241,7 +241,7 @@ const DailyCalorieCalculator = () => {
                 <meta />
             </Head>
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-                <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} mt={"3rem"}>
+                <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} >
                     <Heading color={"white"} mb={"5"}>Calculate Daily Calorie Target</Heading>
                 </Box>
                 <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} mt={"2rem"} mb={"2rem"}>
@@ -276,7 +276,7 @@ const DailyCalorieCalculator = () => {
                     
                     {/*  OUTPUTS  */}
                     <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} flex={1} mr={"10rem"}>
-                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Your Daily Calorie Target 🎯</Heading>
+                        <Heading color={"white"} size={'lg'} textAlign={"center"}>Your Daily Calorie Target 🎯</Heading>
                         <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
                             <Stat bg={"white"} rounded={20}>
                                 <StatNumber fontSize={"35"} textAlign={"center"}>{userDailyCalorieTarget}</StatNumber>

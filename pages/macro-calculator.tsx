@@ -222,7 +222,7 @@ const MacroCalculator = () => {
             </Head>
 
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-                <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} mt={"3rem"}>
+                <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} >
                     <Heading color={"white"} mb={"5"}>Calculate Daily Macro Target</Heading>
                 </Box>
                 <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} my={"2rem"}>
@@ -253,7 +253,7 @@ const MacroCalculator = () => {
                     <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} mr={"10rem"}>
                         <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
                             <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
-                                <Heading color={"white"} size={'xl'} mt={"2rem"} textAlign={"center"}>{userDailyCalorieTarget} kcal 🎯</Heading>
+                                <Heading color={"white"} size={'xl'} textAlign={"center"}>{userDailyCalorieTarget} kcal 🎯</Heading>
                             </Box>
                         </Box>
                         <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"}>
