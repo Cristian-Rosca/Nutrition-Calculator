@@ -12,7 +12,8 @@ import {
     MenuOptionGroup,
     MenuDivider,
 } from '@chakra-ui/react'
-import { HamburgerIcon, AddIcon, ExternalLinkIcon, RepeatIcon, EditIcon } from '@chakra-ui/icons'
+import { HamburgerIcon } from '@chakra-ui/icons'
+import NextLink from 'next/link'
 
 
 const Navbar = () => {
@@ -30,25 +31,27 @@ const Navbar = () => {
                     <Menu>
                         <MenuButton
                             color={"white"}
-                            boxSize={"4rem"}
                             as={IconButton}
                             aria-label='Options'
                             icon={<HamburgerIcon />}
                             variant='outline'
+                            border={0}
+                            fontSize={40}
+                            boxSize={"3rem"}
                         />
                         <MenuList>
-                            <MenuItem icon={<AddIcon />} command='⌘T'>
-                                New Tab
-                            </MenuItem>
-                            <MenuItem icon={<ExternalLinkIcon />} command='⌘N'>
-                                New Window
-                            </MenuItem>
-                            <MenuItem icon={<RepeatIcon />} command='⌘⇧N'>
-                                Open Closed Tab
-                            </MenuItem>
-                            <MenuItem icon={<EditIcon />} command='⌘O'>
-                                Open File...
-                            </MenuItem>
+                            <NextLink href="/" passHref>
+                                <MenuItem as="a">Home</MenuItem>
+                            </NextLink>
+                            <NextLink href="/maintenance-calories-calculator" passHref>
+                                <MenuItem as="a">Maintenance Calculator</MenuItem>
+                            </NextLink>
+                            <NextLink href="/daily-calorie-calculator" passHref>
+                                <MenuItem as="a">Daily Calorie Target</MenuItem>
+                            </NextLink>
+                            <NextLink href="/macro-calculator" passHref>
+                                <MenuItem as="a">Macro Calculator</MenuItem>
+                            </NextLink>
                         </MenuList>
                     </Menu>
                 </Box>
