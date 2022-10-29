@@ -258,6 +258,7 @@ const DailyCalorieCalculator = () => {
                             </Select>
                             <Text color={"white"} mb='8px'> Body Fat Percentage: </Text>
                             <Input mb={3} variant={"outlined"} value={userBodyFatPercentage} onChange={handleUserBodyFatPercentageChange}></Input>
+                            <Button mb={3} justifyContent={"center"} variant={"link"} onClick={handleToggleBodyFatGuideClick} fontSize='sm'> {displayBodyFatGuide ? "Hide body fat guide" : "Click to show body fat guide"} </Button>
                             <Text color={"white"} mb='8px'>Maintenance Calories:</Text>
                             <Input mb={3} variant={"outlined"} value={userMaintenanceCalories} onChange={handleUserMaintenanceCaloriesChange}></Input>
                             <Text color={"white"} mb='8px'>Your Goal:</Text>
@@ -269,6 +270,7 @@ const DailyCalorieCalculator = () => {
                             <Select minHeight={"4rem"} bg='white' placeholder="Select from dropdown" value={userRateOfWeightChange} mb={3} onChange={handleUserRatesOfWeightChangeChange} whiteSpace="normal">
                                 {weightChangeOptionDropdown}
                             </Select>
+                            
                             </Box>
                     </Box>
                     
@@ -283,9 +285,9 @@ const DailyCalorieCalculator = () => {
                         </Box>
                     </Box>
                 </Box>
-                <Box display={"flex"} flexDirection={"row"}>
-                <Button mb={3} justifyContent={"center"} variant={"link"} onClick={handleToggleBodyFatGuideClick} fontSize='sm'> {displayBodyFatGuide ? "Hide body fat guide" : "Click to show body fat guide"} </Button>
-                {displayBodyFatGuide ? <Box mb={3} display={"flex"} justifyContent={"center"} flexDirection={"column"} alignItems={"center"}>
+                <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
+                
+                {displayBodyFatGuide ? <Box mb={"3rem"} display={"flex"} justifyContent={"center"} flexDirection={"column"} alignItems={"center"}>
                             <Image src={bodyFatGuide} width={"950px"} height={"225px"} />
                         </Box> : ""}
                         </Box>
