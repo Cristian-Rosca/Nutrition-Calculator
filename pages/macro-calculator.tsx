@@ -3,6 +3,8 @@ import Head from "next/head";
 import React, { useEffect } from "react";
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
 import { useRouter } from 'next/router';
+import 'chart.js/auto';
+import { Chart } from 'react-chartjs-2';
 
 const MacroCalculator = () => {
     const [userBodyWeight, setUserBodyWeight] = React.useState<number>(0)
@@ -164,6 +166,54 @@ const MacroCalculator = () => {
     }
 
 
+    
+
+
+    const [chartData, setChartData] = React.useState<any>({
+        labels: [
+            'Protein',
+            'Carbs',
+            'Fats'
+        ],
+        datasets: [{
+            data: [ (userProteinTarget * 4 / userDailyCalorieTarget) * 100, (userCarbTarget * 4 / userDailyCalorieTarget) * 100, (userFatTarget * 9 / userDailyCalorieTarget) * 100],
+            backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
+            ],
+            hoverBackgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
+            ]
+        }]
+    })
+
+    useEffect(() => {
+        setChartData({
+            labels: [
+                'Protein',
+                'Carbs',
+                'Fats'
+            ],
+            datasets: [{
+                data: [ (userProteinTarget * 4 / userDailyCalorieTarget) * 100, (userCarbTarget * 4 / userDailyCalorieTarget) * 100, (userFatTarget * 9 / userDailyCalorieTarget) * 100],
+                backgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56'
+                ],
+                hoverBackgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56'
+                ]
+            }]
+        })
+    }, [userProteinTarget, userCarbTarget, userFatTarget]);
+
+
     return (
         <>
             <Head>
@@ -175,7 +225,7 @@ const MacroCalculator = () => {
                 <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} mt={"3rem"}>
                     <Heading color={"white"} mb={"5"}>Calculate Daily Macro Target</Heading>
                 </Box>
-                <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} mt={"2rem"} mb={"2rem"}>
+                <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} my={"2rem"}>
                     {/*  Inputs  */}
                     <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} alignItems={"center"} ml={"10rem"}>
 
@@ -200,81 +250,120 @@ const MacroCalculator = () => {
 
 
                     {/*  Outputs  */}
-                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"}  flex={1} mr={"10rem"}>
+                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} mr={"10rem"}>
                         <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
-                        <Heading color={"white"} size={'xl'} mt={"2rem"} textAlign={"center"}>{userDailyCalorieTarget} kcal 🎯</Heading>
-                    </Box>
+                            <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                                <Heading color={"white"} size={'xl'} mt={"2rem"} textAlign={"center"}>{userDailyCalorieTarget} kcal 🎯</Heading>
+                            </Box>
                         </Box>
                         <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"}>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
-                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Protein 🍗</Heading>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
-                            <Stat bg={"white"} rounded={20}>
-                                <StatNumber fontSize={"35"} textAlign={"center"}>{userProteinTarget} g</StatNumber>
+                            <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                                <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Protein 🍗</Heading>
+                                <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                                    <Stat bg={"white"} rounded={20}>
+                                        <StatNumber fontSize={"35"} textAlign={"center"}>{userProteinTarget} g</StatNumber>
 
-                            </Stat>
-                        </Box>
-                    </Box>
-                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
-                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Carbs 🍚</Heading>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
-                            <Stat bg={"white"} rounded={20}>
-                                <StatNumber fontSize={"35"} textAlign={"center"}>{userCarbTarget} g</StatNumber>
-                            </Stat>
-                        </Box>
-                    </Box>
-                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
-                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fats 🥑</Heading>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
-                            <Stat bg={"white"} rounded={20}>
-                                <StatNumber fontSize={"35"} textAlign={"center"}>{userFatTarget} g</StatNumber>
-                            </Stat>
-                        </Box>
-                    </Box>
-                            
+                                    </Stat>
+                                </Box>
+                            </Box>
+                            <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                                <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Carbs 🍚</Heading>
+                                <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                                    <Stat bg={"white"} rounded={20}>
+                                        <StatNumber fontSize={"35"} textAlign={"center"}>{userCarbTarget} g</StatNumber>
+                                    </Stat>
+                                </Box>
+                            </Box>
+                            <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                                <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fats 🥑</Heading>
+                                <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                                    <Stat bg={"white"} rounded={20}>
+                                        <StatNumber fontSize={"35"} textAlign={"center"}>{userFatTarget} g</StatNumber>
+                                    </Stat>
+                                </Box>
+                            </Box>
+
                         </Box>
                         <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} alignItems={"center"}>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
-                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fibre 🍞</Heading>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
-                            <Stat bg={"white"} rounded={20}>
-                                <StatNumber fontSize={"35"} textAlign={"center"}>{userFibreTarget}g</StatNumber>
+                            <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                                <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fibre 🍞</Heading>
+                                <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                                    <Stat bg={"white"} rounded={20}>
+                                        <StatNumber fontSize={"35"} textAlign={"center"}>{userFibreTarget}g</StatNumber>
 
-                            </Stat>
-                        </Box>
-                    </Box>
-                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
-                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fluids 💧</Heading>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
-                            <Stat bg={"white"} rounded={20}>
-                                <StatNumber fontSize={"35"} textAlign={"center"}>{userFluidTarget}l</StatNumber>
-                            </Stat>
-                        </Box>
-                    </Box>
-                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
-                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fruit & Veg 🥝</Heading>
-                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
-                            <Stat bg={"white"} rounded={20}>
-                                <StatNumber fontSize={"35"} textAlign={"center"}>{userFruitTarget} of each</StatNumber>
+                                    </Stat>
+                                </Box>
+                            </Box>
+                            <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                                <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fluids ☕️</Heading>
+                                <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                                    <Stat bg={"white"} rounded={20}>
+                                        <StatNumber fontSize={"35"} textAlign={"center"}>{userFluidTarget}l</StatNumber>
+                                    </Stat>
+                                </Box>
+                            </Box>
+                            <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                                <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fruit & Veg 🥝</Heading>
+                                <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                                    <Stat bg={"white"} rounded={20}>
+                                        <StatNumber fontSize={"35"} textAlign={"center"}>{userFruitTarget} of each</StatNumber>
 
-                            </Stat>
+                                    </Stat>
+                                </Box>
+                            </Box>
                         </Box>
-                    </Box>
+                        <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} my={"2rem"} >
+                            <Chart
+                                type="doughnut"
+                                data={chartData}
+                                width={"200px"}
+                                height={"200px"}
+                                options={{
+                                    maintainAspectRatio: false, 
+                                    plugins: {
+                                        legend: {
+                                            display: true,
+                                            position: "bottom",
+                                            labels: {
+                                                color: 'white',
+                                                padding: 30
+                                            }
+                                        },
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function(context) {
+                                                    let label = context.dataset.label || '';
+                            
+                                                    if (label) {
+                                                        label += ': ';
+                                                    }
+                                                    if (context.parsed !== null) {
+                                                        label += new Intl.NumberFormat('default', {
+                                                            style: 'percent',
+                                                          }).format(context.parsed / 100);
+                                                    }
+                                                    return label;
+                                                }
+
+                                               
+                                                  }
+                                            }
+                                        }
+
+
+
+                                    }
+
+                                }
+                                
+                            />
                         </Box>
+
+
 
 
                     </Box>
                 </Box>
-
-                {/* <Text color={"white"} fontSize='lg'> Your Daily Calorie Target is: {userDailyCalorieTarget}kcal</Text>
-                <Text color={"white"} fontSize='lg'> Your Protein Target is: {userProteinTarget}g</Text>
-                <Text color={"white"} fontSize='lg'> Your Carb Target is: {userCarbTarget}g</Text>
-                <Text color={"white"} fontSize='lg'> Your Fat Target is: {userFatTarget}g</Text>
-                <Text color={"white"} fontSize='lg'> Your Fibre Target is: {userFibreTarget}g</Text>
-                <Text color={"white"} fontSize='lg'> Your Fluid Target is: {userFluidTarget} litres</Text>
-                <Text color={"white"} fontSize='lg'> Recommended daily fruit servings: {userFruitTarget} servings</Text>
-                <Text color={"white"} fontSize='lg'> Recommended daily veg servings: {userVegTarget} servings</Text> */}
 
 
                 {/*  Steps  */}
