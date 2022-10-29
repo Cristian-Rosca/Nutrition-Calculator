@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Heading, Input, Select, Text, Flex } from "@chakra-ui/react";
+import { Box, Button, Divider, Heading, Input, Select, Text, Flex, Stat, StatNumber, StatHelpText } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
@@ -55,7 +55,7 @@ const MacroCalculator = () => {
         const fluidTarget: number = bodyWeightInKG / 23
         const fruitServingsRecommendation: number = goal === "Dieting" ? Math.ceil(dailyCalorieTarget / 500) : Math.ceil(dailyCalorieTarget / 1000)
         const vegServingsRecommendation: number = goal === "Dieting" ? Math.ceil(dailyCalorieTarget / 500) : Math.ceil(dailyCalorieTarget / 1000)
-        
+
         setUserProteinTarget(Math.floor(proteinTarget))
         setUserFatTarget(Math.floor(fatTarget))
         setUserCarbTarget(Math.floor(carbTarget))
@@ -66,100 +66,102 @@ const MacroCalculator = () => {
     }
 
     useEffect(() => {
-        if(userBodyWeight !== 0 && userDailyCalorieTarget !== 0 && userGoal != ''){
+        if (userBodyWeight !== 0 && userDailyCalorieTarget !== 0 && userGoal != '') {
             calculateMacroRecommendations(userDailyCalorieTarget, userBodyWeight, userProteinPerKG, userPercentageOfFats, userFibrePer1000kcal, userGoal)
         }
-        
+
     }, [userBodyWeight, userDailyCalorieTarget, userGoal, userProteinPerKG, userPercentageOfFats, userFibrePer1000kcal]);
 
     interface User {
-        stats : {
-            userBodyWeight : number,
-            userHeightInCM : number,
-            userAge : number,
-            userSex : string,
-            userPhysicalActivityLevel : number,
-            userRMR : number, 
-            userMaintenanceCalories : number
-            userBodyFatPercentage : number
+        stats: {
+            userBodyWeight: number,
+            userHeightInCM: number,
+            userAge: number,
+            userSex: string,
+            userPhysicalActivityLevel: number,
+            userRMR: number,
+            userMaintenanceCalories: number
+            userBodyFatPercentage: number
         },
     }
-    
-    const [user, setUser] = React.useState<User>({ stats : {
-        userBodyWeight : 0,
-        userHeightInCM : 0,
-        userAge : 0,
-        userSex : '',
-        userPhysicalActivityLevel : 0,
-        userRMR : 0, 
-        userMaintenanceCalories : 0,
-        userBodyFatPercentage : 0
-    }})
-    
-    
-    
+
+    const [user, setUser] = React.useState<User>({
+        stats: {
+            userBodyWeight: 0,
+            userHeightInCM: 0,
+            userAge: 0,
+            userSex: '',
+            userPhysicalActivityLevel: 0,
+            userRMR: 0,
+            userMaintenanceCalories: 0,
+            userBodyFatPercentage: 0
+        }
+    })
+
+
+
     useEffect(() => {
         const data = window.localStorage.getItem('User');
         if (data) {
-            let lsUser= JSON.parse(data)
+            let lsUser = JSON.parse(data)
             setUser(lsUser)
             setUserBodyWeight(Number(lsUser.stats.userBodyWeight))
             setUserGoal(lsUser.stats.userGoal)
         }
-      }, []);
-    
+    }, []);
+
     interface Stats {
-        userBodyWeight : number,
-        userHeightInCM : number,
-        userAge : number,
-        userSex : string,
-        userPhysicalActivityLevel : number,
-        userRMR : number, 
-        userMaintenanceCalories : number
-        userBodyFatPercentage : number
+        userBodyWeight: number,
+        userHeightInCM: number,
+        userAge: number,
+        userSex: string,
+        userPhysicalActivityLevel: number,
+        userRMR: number,
+        userMaintenanceCalories: number
+        userBodyFatPercentage: number
     }
-    
-    
-    const userStats : Stats = {
-        userBodyWeight : userBodyWeight,
-        userHeightInCM : user.stats.userHeightInCM,
-        userAge : user.stats.userAge,
-        userSex : user.stats.userSex,
-        userPhysicalActivityLevel : user.stats.userPhysicalActivityLevel,
-        userRMR : user.stats.userRMR, 
-        userMaintenanceCalories : user.stats.userMaintenanceCalories,
-        userBodyFatPercentage : user.stats.userBodyFatPercentage
+
+
+    const userStats: Stats = {
+        userBodyWeight: userBodyWeight,
+        userHeightInCM: user.stats.userHeightInCM,
+        userAge: user.stats.userAge,
+        userSex: user.stats.userSex,
+        userPhysicalActivityLevel: user.stats.userPhysicalActivityLevel,
+        userRMR: user.stats.userRMR,
+        userMaintenanceCalories: user.stats.userMaintenanceCalories,
+        userBodyFatPercentage: user.stats.userBodyFatPercentage
     }
-    
-    
+
+
     useEffect(() => {
-            user.stats = userStats
-            window.localStorage.setItem('User', JSON.stringify(user));
-      }, [userStats]);
+        user.stats = userStats
+        window.localStorage.setItem('User', JSON.stringify(user));
+    }, [userStats]);
 
-      const router = useRouter()
+    const router = useRouter()
 
-      const steps = [
+    const steps = [
         { label: 'Step 1' },
         { label: 'Step 2' },
         { label: 'Step 3' },
         { label: 'Step 4' }
     ];
 
-    
-        const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
-            initialStep: 2,
-        })
 
-        function handlePrevClick() {
-            prevStep
-            router.push('/daily-calorie-calculator')
-        }
+    const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
+        initialStep: 2,
+    })
 
-        function handleNextClick() {
-            nextStep
-            router.push('/refeed-calculator')
-        }
+    function handlePrevClick() {
+        prevStep
+        router.push('/daily-calorie-calculator')
+    }
+
+    function handleNextClick() {
+        nextStep
+        router.push('/refeed-calculator')
+    }
 
 
     return (
@@ -168,50 +170,124 @@ const MacroCalculator = () => {
                 <title>Nutrition Tool | Maintenance Calculator</title>
                 <meta />
             </Head>
-            <Box display={"flex"} justifyContent={"center"} >
-                <Box display={"flex"} flexDirection={"column"} p={10} rounded={6} position={"relative"} alignItems={"center"}>
-                    <Heading color={"white"} mb={"5"}>Calculate Daily Macro Target</Heading>
-                    <Box display={"flex"} flexDirection={"column"} width="50%">
-                        <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
-                        <Input mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
-                        <Text color={"white"} mb='8px'>Daily Calorie Target:</Text>
-                        <Input mb={3} variant={"outlined"} value={userDailyCalorieTarget} onChange={handleUserDailyCalorieTargetChange}></Input>
-                        <Text color={"white"} mb='8px'>Your Goal:</Text>
-                        <Select bg='white' placeholder="Select from dropdown" mb={3} onChange={handleUserGoalChange}>
-                            <option value='Gaining'>Lean Gaining</option>
-                            <option value='Dieting'>Dieting</option>
-                        </Select>
-                        <Text color={"white"} alignSelf={"start"} mb='8px'>Protein per KG:</Text>
-                        <Input mb={3} variant={"outlined"} value={userProteinPerKG} onChange={handleUserProteinPerKGChange} ></Input>
-                        <Text color={"white"} alignSelf={"start"} mb='8px'>Percentage of Fats:</Text>
-                        <Input mb={3} variant={"outlined"} value={userPercentageOfFats} onChange={handleUserPercentageOfFatsChange} ></Input>
-                        <Text color={"white"} alignSelf={"start"} mb='8px'>Fibre per 1000kcal:</Text>
-                        <Input mb={3} variant={"outlined"} value={userFibrePer1000kcal} onChange={handleUserFibrePer1000kcalChange} ></Input>
-                    </Box>
-                    <Divider mb={"3"} mt={"3"} orientation='horizontal' />
-                    <Heading color={"white"} mb={"3"} size='lg'> Results</Heading>
-                    <Text color={"white"} fontSize='lg'> Your Daily Calorie Target is: {userDailyCalorieTarget}kcal</Text>
-                    <Text color={"white"} fontSize='lg'> Your Protein Target is: {userProteinTarget}g</Text>
-                    <Text color={"white"} fontSize='lg'> Your Carb Target is: {userCarbTarget}g</Text>
-                    <Text color={"white"} fontSize='lg'> Your Fat Target is: {userFatTarget}g</Text>
-                    <Text color={"white"} fontSize='lg'> Your Fibre Target is: {userFibreTarget}g</Text>
-                    <Text color={"white"} fontSize='lg'> Your Fluid Target is: {userFluidTarget} litres</Text>
-                    <Text color={"white"} fontSize='lg'> Recommended daily fruit servings: {userFruitTarget} servings</Text>
-                    <Text color={"white"} fontSize='lg'> Recommended daily veg servings: {userVegTarget} servings</Text>
-                    <Divider mb={"3"} mt={"3"} orientation='horizontal' />
-                </Box>
-            </Box>
 
-            <Box display={"flex"} justifyContent={"center"}>
+            <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
+                <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} mt={"3rem"}>
+                    <Heading color={"white"} mb={"5"}>Calculate Daily Macro Target</Heading>
+                </Box>
+                <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} mt={"2rem"} mb={"2rem"}>
+                    {/*  Inputs  */}
+                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} alignItems={"center"} ml={"10rem"}>
+
+                        <Box display={"flex"} flexDirection={"column"} width={"17rem"}>
+                            <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
+                            <Input mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
+                            <Text color={"white"} mb='8px'>Daily Calorie Target:</Text>
+                            <Input mb={3} variant={"outlined"} value={userDailyCalorieTarget} onChange={handleUserDailyCalorieTargetChange}></Input>
+                            <Text color={"white"} mb='8px'>Your Goal:</Text>
+                            <Select bg='white' placeholder="Select from dropdown" mb={3} onChange={handleUserGoalChange}>
+                                <option value='Gaining'>Lean Gaining</option>
+                                <option value='Dieting'>Dieting</option>
+                            </Select>
+                            <Text color={"white"} alignSelf={"start"} mb='8px'>Protein per KG:</Text>
+                            <Input mb={3} variant={"outlined"} value={userProteinPerKG} onChange={handleUserProteinPerKGChange} ></Input>
+                            <Text color={"white"} alignSelf={"start"} mb='8px'>Percentage of Fats:</Text>
+                            <Input mb={3} variant={"outlined"} value={userPercentageOfFats} onChange={handleUserPercentageOfFatsChange} ></Input>
+                            <Text color={"white"} alignSelf={"start"} mb='8px'>Fibre per 1000kcal:</Text>
+                            <Input mb={3} variant={"outlined"} value={userFibrePer1000kcal} onChange={handleUserFibrePer1000kcalChange} ></Input>
+                        </Box>
+                    </Box>
+
+
+                    {/*  Outputs  */}
+                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"}  flex={1} mr={"10rem"}>
+                        <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                        <Heading color={"white"} size={'xl'} mt={"2rem"} textAlign={"center"}>{userDailyCalorieTarget} kcal 🎯</Heading>
+                    </Box>
+                        </Box>
+                        <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"}>
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Protein 🍗</Heading>
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                            <Stat bg={"white"} rounded={20}>
+                                <StatNumber fontSize={"35"} textAlign={"center"}>{userProteinTarget} g</StatNumber>
+
+                            </Stat>
+                        </Box>
+                    </Box>
+                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Carbs 🍚</Heading>
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                            <Stat bg={"white"} rounded={20}>
+                                <StatNumber fontSize={"35"} textAlign={"center"}>{userCarbTarget} g</StatNumber>
+                            </Stat>
+                        </Box>
+                    </Box>
+                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fats 🥑</Heading>
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                            <Stat bg={"white"} rounded={20}>
+                                <StatNumber fontSize={"35"} textAlign={"center"}>{userFatTarget} g</StatNumber>
+                            </Stat>
+                        </Box>
+                    </Box>
+                            
+                        </Box>
+                        <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} alignItems={"center"}>
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fibre 🍞</Heading>
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                            <Stat bg={"white"} rounded={20}>
+                                <StatNumber fontSize={"35"} textAlign={"center"}>{userFibreTarget}g</StatNumber>
+
+                            </Stat>
+                        </Box>
+                    </Box>
+                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fluids 💧</Heading>
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                            <Stat bg={"white"} rounded={20}>
+                                <StatNumber fontSize={"35"} textAlign={"center"}>{userFluidTarget}l</StatNumber>
+                            </Stat>
+                        </Box>
+                    </Box>
+                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
+                        <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fruit & Veg 🥝</Heading>
+                        <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
+                            <Stat bg={"white"} rounded={20}>
+                                <StatNumber fontSize={"35"} textAlign={"center"}>{userFruitTarget} of each</StatNumber>
+
+                            </Stat>
+                        </Box>
+                    </Box>
+                        </Box>
+
+
+                    </Box>
+                </Box>
+
+                {/* <Text color={"white"} fontSize='lg'> Your Daily Calorie Target is: {userDailyCalorieTarget}kcal</Text>
+                <Text color={"white"} fontSize='lg'> Your Protein Target is: {userProteinTarget}g</Text>
+                <Text color={"white"} fontSize='lg'> Your Carb Target is: {userCarbTarget}g</Text>
+                <Text color={"white"} fontSize='lg'> Your Fat Target is: {userFatTarget}g</Text>
+                <Text color={"white"} fontSize='lg'> Your Fibre Target is: {userFibreTarget}g</Text>
+                <Text color={"white"} fontSize='lg'> Your Fluid Target is: {userFluidTarget} litres</Text>
+                <Text color={"white"} fontSize='lg'> Recommended daily fruit servings: {userFruitTarget} servings</Text>
+                <Text color={"white"} fontSize='lg'> Recommended daily veg servings: {userVegTarget} servings</Text> */}
+
+
+                {/*  Steps  */}
+                <Box display={"flex"} justifyContent={"center"}>
                     <Box display={"flex"} flexDirection="column" width="50%" justifyContent={"flex-start"} >
                         <Box display={"flex"} justifyContent={"center"}>
-                        <Steps activeStep={activeStep} >
-                            {steps.map(({ label}) => (
-                                <Step  label={label} key={label}>
-                                    
-                                </Step>
-                            ))}
-                        </Steps>
+                            <Steps activeStep={activeStep} >
+                                {steps.map(({ label }) => (
+                                    <Step label={label} key={label}>
+
+                                    </Step>
+                                ))}
+                            </Steps>
                         </Box>
                         {activeStep === steps.length ? (
                             <Box display={"flex"} p={4}>
@@ -237,8 +313,10 @@ const MacroCalculator = () => {
                             </Box>
                         )}
                     </Box>
-                    </Box>
-           
+                </Box>
+            </Box>
+
+
 
 
         </>
