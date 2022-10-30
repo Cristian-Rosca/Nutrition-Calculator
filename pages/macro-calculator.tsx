@@ -31,7 +31,7 @@ const MacroCalculator = () => {
     //     }
     // }
 
-    const [userPercentageOfFats, setUserPercentageOfFats] = React.useState<number>(.25)
+    const [userPercentageOfFats, setUserPercentageOfFats] = React.useState<number>(25)
     const handleUserPercentageOfFatsChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserPercentageOfFats(Number(e.target.value))
 
     const [userFibrePer1000kcal, setUserFibrePer1000kcal] = React.useState<number>(14)
@@ -63,7 +63,7 @@ const MacroCalculator = () => {
     function calculateMacroRecommendations(dailyCalorieTarget: number, bodyWeightInKG: number, proteinPerKG: number, percentageOfFats: number, fibrePer1000kcal: number, goal: string) {
         // const calorieTarget = dailyCalorieTarget;
         const proteinTarget: number = bodyWeightInKG * proteinPerKG;
-        const fatTarget: number = (dailyCalorieTarget * percentageOfFats) / 9
+        const fatTarget: number = (dailyCalorieTarget * (percentageOfFats / 100)) / 9
         const carbTarget: number = (dailyCalorieTarget - (proteinTarget * 4) - (fatTarget * 9)) / 4
         const fibreTarget: number = (dailyCalorieTarget / 1000) * fibrePer1000kcal
         const fluidTarget: number = bodyWeightInKG / 23
@@ -305,6 +305,10 @@ const MacroCalculator = () => {
         })
     }, [userProteinTarget, userCarbTarget, userFatTarget]);
 
+    const formatToKG = (val: number) => val + ` kg`
+    const formatToKcal = (val: number) => val + ` kcal`
+    const formatToGrams = (val: number) => val + ` g`
+    const formatToPercentage = (val: number) => val + ` %`
 
     return (
         <>
@@ -323,7 +327,7 @@ const MacroCalculator = () => {
 
                         <Box display={"flex"} flexDirection={"column"} width={"17rem"}>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
-                            <NumberInput mb={3} variant={"outlined"} value={userBodyWeight} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToKG(userBodyWeight)} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
                                 setUserBodyWeight(Number(value));
                             }}>
                                 <NumberInputField />
@@ -333,7 +337,7 @@ const MacroCalculator = () => {
                                 </NumberInputStepper>
                             </NumberInput>
                             <Text color={"white"} mb='8px'>Daily Calorie Target:</Text>
-                            <NumberInput mb={3} variant={"outlined"} value={userDailyCalorieTarget} rounded={10} bgColor={"white"} step={1} min={0} max={20000} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToKcal(userDailyCalorieTarget)} rounded={10} bgColor={"white"} step={1} min={0} max={20000} onChange={(value: number | string) => {
                                 setUserDailyCalorieTarget(Number(value));
                             }}>
                                 <NumberInputField />
@@ -348,7 +352,7 @@ const MacroCalculator = () => {
                                 <option value='Dieting'>Dieting</option>
                             </Select>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Protein per KG:</Text>
-                            <NumberInput mb={3} variant={"outlined"} value={userProteinPerKG} rounded={10} bgColor={"white"}  precision={1} step={0.1} min={1.8} max={2.8} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToGrams(userProteinPerKG)} rounded={10} bgColor={"white"}  precision={1} step={0.1} min={1.6} max={2.6} onChange={(value: number | string) => {
                                 setUserProteinPerKG(Number(value));
                             }}>
                                 <NumberInputField />
@@ -358,7 +362,7 @@ const MacroCalculator = () => {
                                 </NumberInputStepper>
                             </NumberInput>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Percentage of Fats:</Text>
-                            <NumberInput mb={3} variant={"outlined"} value={userPercentageOfFats} rounded={10} bgColor={"white"}  precision={2} step={0.01} min={0.15} max={0.4} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToPercentage(userPercentageOfFats)} rounded={10} bgColor={"white"} min={15} max={40} onChange={(value: number | string) => {
                                 setUserPercentageOfFats(Number(value));
                             }}>
                                 <NumberInputField />
@@ -368,7 +372,7 @@ const MacroCalculator = () => {
                                 </NumberInputStepper>
                             </NumberInput>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Fibre per 1000kcal:</Text>
-                            <NumberInput mb={3} variant={"outlined"} value={userFibrePer1000kcal} rounded={10} bgColor={"white"}  step={1} min={10} max={20} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToGrams(userFibrePer1000kcal)} rounded={10} bgColor={"white"}  step={1} min={10} max={20} onChange={(value: number | string) => {
                                 setUserFibrePer1000kcal(Number(value));
                             }}>
                                 <NumberInputField />

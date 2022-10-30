@@ -297,6 +297,10 @@ const DailyCalorieCalculator = () => {
         router.push('/macro-calculator')
     }
 
+    const formatToKG = (val: number) => val + ` kg`
+
+    const formatToPercentage = (val: number) => val + ` %`
+    const formatToKcal = (val: number) => val + ` kcal`
 
 
     return (
@@ -315,7 +319,7 @@ const DailyCalorieCalculator = () => {
                             {/*  Inputs  */}
                             <Box display={"flex"} flexDirection={"column"} width={"17rem"}>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
-                            <NumberInput mb={3} variant={"outlined"} value={userBodyWeight} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToKG(userBodyWeight)} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
                                 setUserBodyWeight(Number(value));
                             }}>
                                 <NumberInputField />
@@ -330,7 +334,7 @@ const DailyCalorieCalculator = () => {
                                 <option value='Female'>Female</option>
                             </Select>
                             <Text color={"white"} mb='8px'> Body Fat Percentage: </Text>
-                            <NumberInput mb={3} variant={"outlined"} value={userBodyFatPercentage} rounded={10} bgColor={"white"}  step={1} min={0} max={99} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToPercentage(userBodyFatPercentage)} rounded={10} bgColor={"white"}  step={1} min={0} max={99} onChange={(value: number | string) => {
                                 setUserBodyFatPercentage(Number(value));
                             }}>
                                 <NumberInputField />
@@ -341,7 +345,7 @@ const DailyCalorieCalculator = () => {
                             </NumberInput>
                             <Button mb={3} justifyContent={"center"} variant={"link"} onClick={handleToggleBodyFatGuideClick} fontSize='sm'> {displayBodyFatGuide ? "Hide body fat guide" : "Click to show body fat guide"} </Button>
                             <Text color={"white"} mb='8px'>Maintenance Calories:</Text>
-                            <NumberInput mb={3} variant={"outlined"} value={userMaintenanceCalories} rounded={10} bgColor={"white"} step={1} min={0} max={20000} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToKcal(userMaintenanceCalories)} rounded={10} bgColor={"white"} step={1} min={0} max={20000} onChange={(value: number | string) => {
                                 setUserMaintenanceCalories(Number(value));
                             }}>
                                 <NumberInputField />

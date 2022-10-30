@@ -199,7 +199,9 @@ const MaintenanceCaloriesCalculator = () => {
             router.push('/daily-calorie-calculator')
         }
 
-
+        const formatToKG = (val: number) => val + ` kg`
+        const formatToCM = (val: number) => val + ` cm`
+        const formatToKcal = (val: number) => val + `kcal`
 
         return (
             <>
@@ -216,7 +218,7 @@ const MaintenanceCaloriesCalculator = () => {
                         <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} alignItems={"center"} ml={"10rem"}>
                             <Box  display={"flex"} flexDirection={"column"} width={"17rem"}>
                                 <Text color={"white"} mb='8px'>Body Weight in KG:</Text>
-                                <NumberInput mb={3} variant={"outlined"} value={userBodyWeight} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
+                                <NumberInput mb={3} variant={"outlined"} value={formatToKG(userBodyWeight)} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
                                 setUserBodyWeight(Number(value));
                             }}>
                                 <NumberInputField />
@@ -226,7 +228,7 @@ const MaintenanceCaloriesCalculator = () => {
                                 </NumberInputStepper>
                             </NumberInput>
                                 <Text color={"white"} mb='8px'>Height in CM:</Text>
-                                <NumberInput mb={3} variant={"outlined"} value={userHeightInCM} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
+                                <NumberInput mb={3} variant={"outlined"} value={formatToCM(userHeightInCM)} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
                                 setUserHeightInCM(Number(value));
                             }}>
                                 <NumberInputField />
