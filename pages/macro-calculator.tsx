@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Heading, Input, Select, Text, Flex, Stat, StatNumber, StatHelpText } from "@chakra-ui/react";
+import { Box, Button, Divider, Heading, Input, Select, Text, Flex, Stat, StatNumber, StatHelpText, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
@@ -18,6 +18,18 @@ const MacroCalculator = () => {
 
     const [userProteinPerKG, setUserProteinPerKG] = React.useState<number>(2.2)
     const handleUserProteinPerKGChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserProteinPerKG(Number(e.target.value))
+
+    // {
+    //     if (Number(e.target.value) < 1) {
+    //         setUserProteinPerKG(1.8)
+    //     }
+    //     else if (Number(e.target.value) > 2.8) {
+    //         setUserProteinPerKG(2.8)
+    //     }
+    //     else {
+    //         setUserProteinPerKG(Number(e.target.value))
+    //     }
+    // }
 
     const [userPercentageOfFats, setUserPercentageOfFats] = React.useState<number>(.25)
     const handleUserPercentageOfFatsChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserPercentageOfFats(Number(e.target.value))
@@ -87,11 +99,11 @@ const MacroCalculator = () => {
         },
         targets: {
             userRateOfWeightChange: number,
-            userDailyCalorieTarget : number,
-            userGoal: string, 
+            userDailyCalorieTarget: number,
+            userGoal: string,
             userProteinTarget: number,
             userCarbTarget: number,
-            userFatTarget: number, 
+            userFatTarget: number,
             userFibreTarget: number,
             userFluidTarget: number,
             userFruitTarget: number,
@@ -117,11 +129,11 @@ const MacroCalculator = () => {
         },
         targets: {
             userRateOfWeightChange: 0,
-            userDailyCalorieTarget : 0,
-            userGoal: '', 
+            userDailyCalorieTarget: 0,
+            userGoal: '',
             userProteinTarget: 0,
             userCarbTarget: 0,
-            userFatTarget: 0, 
+            userFatTarget: 0,
             userFibreTarget: 0,
             userFluidTarget: 0,
             userFruitTarget: 0,
@@ -163,11 +175,11 @@ const MacroCalculator = () => {
 
     interface Targets {
         userRateOfWeightChange: number,
-        userDailyCalorieTarget : number,
-        userGoal: string, 
+        userDailyCalorieTarget: number,
+        userGoal: string,
         userProteinTarget: number,
         userCarbTarget: number,
-        userFatTarget: number, 
+        userFatTarget: number,
         userFibreTarget: number,
         userFluidTarget: number,
         userFruitTarget: number,
@@ -192,20 +204,20 @@ const MacroCalculator = () => {
         userBodyFatPercentage: user.stats.userBodyFatPercentage
     }
 
-    const userTargets : Targets = {
+    const userTargets: Targets = {
         userRateOfWeightChange: user.targets.userRateOfWeightChange,
-        userDailyCalorieTarget : userDailyCalorieTarget,
-        userGoal: userGoal, 
+        userDailyCalorieTarget: userDailyCalorieTarget,
+        userGoal: userGoal,
         userProteinTarget: userProteinTarget,
         userCarbTarget: userCarbTarget,
-        userFatTarget: userFatTarget, 
+        userFatTarget: userFatTarget,
         userFibreTarget: userFibreTarget,
         userFluidTarget: userFluidTarget,
         userFruitTarget: userFruitTarget,
         userVegTarget: userVegTarget
     }
 
-    const userPreferences : Preferences = {
+    const userPreferences: Preferences = {
         userProteinPerKG: userProteinPerKG,
         userPercentageOfFats: userPercentageOfFats,
         userFibrePer1000kcal: userFibrePer1000kcal
@@ -246,7 +258,7 @@ const MacroCalculator = () => {
     }
 
 
-    
+
 
 
     const [chartData, setChartData] = React.useState<any>({
@@ -256,7 +268,7 @@ const MacroCalculator = () => {
             'Fats'
         ],
         datasets: [{
-            data: [ (userProteinTarget * 4 / userDailyCalorieTarget) * 100, (userCarbTarget * 4 / userDailyCalorieTarget) * 100, (userFatTarget * 9 / userDailyCalorieTarget) * 100],
+            data: [(userProteinTarget * 4 / userDailyCalorieTarget) * 100, (userCarbTarget * 4 / userDailyCalorieTarget) * 100, (userFatTarget * 9 / userDailyCalorieTarget) * 100],
             backgroundColor: [
                 '#FF6384',
                 '#36A2EB',
@@ -278,7 +290,7 @@ const MacroCalculator = () => {
                 'Fats'
             ],
             datasets: [{
-                data: [ (userProteinTarget * 4 / userDailyCalorieTarget) * 100, (userCarbTarget * 4 / userDailyCalorieTarget) * 100, (userFatTarget * 9 / userDailyCalorieTarget) * 100],
+                data: [(userProteinTarget * 4 / userDailyCalorieTarget) * 100, (userCarbTarget * 4 / userDailyCalorieTarget) * 100, (userFatTarget * 9 / userDailyCalorieTarget) * 100],
                 backgroundColor: [
                     '#FF6384',
                     '#36A2EB',
@@ -311,20 +323,60 @@ const MacroCalculator = () => {
 
                         <Box display={"flex"} flexDirection={"column"} width={"17rem"}>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
-                            <Input mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
+                            <NumberInput mb={3} variant={"outlined"} value={userBodyWeight} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
+                                setUserBodyWeight(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                             <Text color={"white"} mb='8px'>Daily Calorie Target:</Text>
-                            <Input mb={3} variant={"outlined"} value={userDailyCalorieTarget} onChange={handleUserDailyCalorieTargetChange}></Input>
+                            <NumberInput mb={3} variant={"outlined"} value={userDailyCalorieTarget} rounded={10} bgColor={"white"} step={1} min={0} max={20000} onChange={(value: number | string) => {
+                                setUserDailyCalorieTarget(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                             <Text color={"white"} mb='8px'>Your Goal:</Text>
                             <Select bg='white' placeholder={"Select from dropdown"} value={userGoal} mb={3} onChange={handleUserGoalChange}>
                                 <option value='Gaining'>Lean Gaining</option>
                                 <option value='Dieting'>Dieting</option>
                             </Select>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Protein per KG:</Text>
-                            <Input mb={3} variant={"outlined"} value={userProteinPerKG} onChange={handleUserProteinPerKGChange} ></Input>
+                            <NumberInput mb={3} variant={"outlined"} value={userProteinPerKG} rounded={10} bgColor={"white"}  precision={1} step={0.1} min={1.8} max={2.8} onChange={(value: number | string) => {
+                                setUserProteinPerKG(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Percentage of Fats:</Text>
-                            <Input mb={3} variant={"outlined"} value={userPercentageOfFats} onChange={handleUserPercentageOfFatsChange} ></Input>
+                            <NumberInput mb={3} variant={"outlined"} value={userPercentageOfFats} rounded={10} bgColor={"white"}  precision={2} step={0.01} min={0.15} max={0.4} onChange={(value: number | string) => {
+                                setUserPercentageOfFats(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Fibre per 1000kcal:</Text>
-                            <Input mb={3} variant={"outlined"} value={userFibrePer1000kcal} onChange={handleUserFibrePer1000kcalChange} ></Input>
+                            <NumberInput mb={3} variant={"outlined"} value={userFibrePer1000kcal} rounded={10} bgColor={"white"}  step={1} min={10} max={20} onChange={(value: number | string) => {
+                                setUserFibrePer1000kcal(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                         </Box>
                     </Box>
 
@@ -399,7 +451,7 @@ const MacroCalculator = () => {
                                 width={"200px"}
                                 height={"200px"}
                                 options={{
-                                    maintainAspectRatio: false, 
+                                    maintainAspectRatio: false,
                                     plugins: {
                                         legend: {
                                             display: true,
@@ -411,31 +463,31 @@ const MacroCalculator = () => {
                                         },
                                         tooltip: {
                                             callbacks: {
-                                                label: function(context) {
+                                                label: function (context) {
                                                     let label = context.dataset.label || '';
-                            
+
                                                     if (label) {
                                                         label += ': ';
                                                     }
                                                     if (context.parsed !== null) {
                                                         label += new Intl.NumberFormat('default', {
                                                             style: 'percent',
-                                                          }).format(context.parsed / 100);
+                                                        }).format(context.parsed / 100);
                                                     }
                                                     return label;
                                                 }
 
-                                               
-                                                  }
+
                                             }
                                         }
-
-
-
                                     }
 
+
+
                                 }
-                                
+
+                                }
+
                             />
                         </Box>
 

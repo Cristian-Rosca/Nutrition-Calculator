@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Flex, Heading, Input, Divider, Text, Select, Box, Stat, StatLabel, StatNumber, StatHelpText, Button, color } from "@chakra-ui/react"
+import { Flex, Heading, Input, Divider, Text, Select, Box, Stat, StatLabel, StatNumber, StatHelpText, Button, color, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react";
 
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
@@ -216,11 +216,35 @@ const MaintenanceCaloriesCalculator = () => {
                         <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} alignItems={"center"} ml={"10rem"}>
                             <Box  display={"flex"} flexDirection={"column"} width={"17rem"}>
                                 <Text color={"white"} mb='8px'>Body Weight in KG:</Text>
-                                <Input rounded={8} mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
+                                <NumberInput mb={3} variant={"outlined"} value={userBodyWeight} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
+                                setUserBodyWeight(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                                 <Text color={"white"} mb='8px'>Height in CM:</Text>
-                                <Input rounded={8} mb={3} variant={"outlined"} value={userHeightInCM} onChange={handleUserHeightChange}></Input>
+                                <NumberInput mb={3} variant={"outlined"} value={userHeightInCM} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
+                                setUserHeightInCM(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                                 <Text color={"white"} mb='8px'>Age:</Text>
-                                <Input rounded={8} mb={3} variant={"outlined"} value={userAge} onChange={handleUserAgeChange}></Input>
+                                <NumberInput mb={3} variant={"outlined"} value={userAge} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
+                                setUserAge(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                                 <Text color={"white"} mb='8px'>Sex:</Text>
                                 <Select rounded={8} bg='white' mb={3} placeholder={"Select from dropdown"} value={userSex} onChange={handleUserSexChange}>
                                     <option value='Male'>Male</option>

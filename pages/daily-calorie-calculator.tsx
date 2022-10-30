@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Button, Divider, Flex, Heading, Input, Select, Text, Stat, StatNumber, StatHelpText } from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, Heading, Input, Select, Text, Stat, StatNumber, StatHelpText, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
 import bodyFatGuide from "../public/body-fat-guide.png"
@@ -315,17 +315,41 @@ const DailyCalorieCalculator = () => {
                             {/*  Inputs  */}
                             <Box display={"flex"} flexDirection={"column"} width={"17rem"}>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
-                            <Input mb={3} variant={"outlined"} value={userBodyWeight} onChange={handleUserBodyWeightChange} ></Input>
+                            <NumberInput mb={3} variant={"outlined"} value={userBodyWeight} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
+                                setUserBodyWeight(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                             <Text color={"white"} mb='8px'>Sex:</Text>
                             <Select bg='white' placeholder="Select from dropdown" value={userSex} mb={3} onChange={handleUserSexChange}>
                                 <option value='Male'>Male</option>
                                 <option value='Female'>Female</option>
                             </Select>
                             <Text color={"white"} mb='8px'> Body Fat Percentage: </Text>
-                            <Input mb={3} variant={"outlined"} value={userBodyFatPercentage} onChange={handleUserBodyFatPercentageChange}></Input>
+                            <NumberInput mb={3} variant={"outlined"} value={userBodyFatPercentage} rounded={10} bgColor={"white"}  step={1} min={0} max={99} onChange={(value: number | string) => {
+                                setUserBodyFatPercentage(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                             <Button mb={3} justifyContent={"center"} variant={"link"} onClick={handleToggleBodyFatGuideClick} fontSize='sm'> {displayBodyFatGuide ? "Hide body fat guide" : "Click to show body fat guide"} </Button>
                             <Text color={"white"} mb='8px'>Maintenance Calories:</Text>
-                            <Input mb={3} variant={"outlined"} value={userMaintenanceCalories} onChange={handleUserMaintenanceCaloriesChange}></Input>
+                            <NumberInput mb={3} variant={"outlined"} value={userMaintenanceCalories} rounded={10} bgColor={"white"} step={1} min={0} max={20000} onChange={(value: number | string) => {
+                                setUserMaintenanceCalories(Number(value));
+                            }}>
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
                             <Text color={"white"} mb='8px'>Your Goal:</Text>
                             <Select bg='white' placeholder={"Select from dropdown"} value={userGoal} mb={3} onChange={handleUserGoalChange}>
                                 <option value='Gaining'>Lean Gaining</option>
