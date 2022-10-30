@@ -38,10 +38,6 @@ const MaintenanceCaloriesCalculator = () => {
         const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
             initialStep: 0,
         })
-
-        // useEffect(() => {
-        //     setStep(0)
-        // })
         
 
         useEffect(() => {
@@ -100,6 +96,23 @@ const MaintenanceCaloriesCalculator = () => {
                 userMaintenanceCalories: number
                 userBodyFatPercentage: number
             },
+            targets: {
+                userRateOfWeightChange: number,
+                userDailyCalorieTarget : number,
+                userGoal: string, 
+                userProteinTarget: number,
+                userCarbTarget: number,
+                userFatTarget: number, 
+                userFibreTarget: number,
+                userFluidTarget: number,
+                userFruitTarget: number,
+                userVegTarget: number
+            },
+            preferences: {
+                userProteinPerKG: number,
+                userPercentageOfFats: number,
+                userFibrePer1000kcal: number
+            }
         }
 
         const [user, setUser] = React.useState<User>({
@@ -112,6 +125,23 @@ const MaintenanceCaloriesCalculator = () => {
                 userRMR: 0,
                 userMaintenanceCalories: 0,
                 userBodyFatPercentage: 0
+            },
+            targets: {
+                userRateOfWeightChange: 0,
+                userDailyCalorieTarget : 0,
+                userGoal: '', 
+                userProteinTarget: 0,
+                userCarbTarget: 0,
+                userFatTarget: 0, 
+                userFibreTarget: 0,
+                userFluidTarget: 0,
+                userFruitTarget: 0,
+                userVegTarget: 0
+            },
+            preferences: {
+                userProteinPerKG: 2.2,
+                userPercentageOfFats: 0.25,
+                userFibrePer1000kcal: 14
             }
         })
 

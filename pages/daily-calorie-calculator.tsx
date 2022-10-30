@@ -150,6 +150,23 @@ const DailyCalorieCalculator = () => {
             userMaintenanceCalories: number
             userBodyFatPercentage: number
         },
+        targets: {
+            userRateOfWeightChange: number,
+            userDailyCalorieTarget : number,
+            userGoal: string, 
+            userProteinTarget: number,
+            userCarbTarget: number,
+            userFatTarget: number, 
+            userFibreTarget: number,
+            userFluidTarget: number,
+            userFruitTarget: number,
+            userVegTarget: number
+        },
+        preferences: {
+            userProteinPerKG: number,
+            userPercentageOfFats: number,
+            userFibrePer1000kcal: number
+        }
     }
 
     const [user, setUser] = React.useState<User>({
@@ -162,6 +179,23 @@ const DailyCalorieCalculator = () => {
             userRMR: 0,
             userMaintenanceCalories: 0,
             userBodyFatPercentage: 0
+        },
+        targets: {
+            userRateOfWeightChange: 0,
+            userDailyCalorieTarget : 0,
+            userGoal: '', 
+            userProteinTarget: 0,
+            userCarbTarget: 0,
+            userFatTarget: 0, 
+            userFibreTarget: 0,
+            userFluidTarget: 0,
+            userFruitTarget: 0,
+            userVegTarget: 0
+        },
+        preferences: {
+            userProteinPerKG: 2.2,
+            userPercentageOfFats: 0.25,
+            userFibrePer1000kcal: 14
         }
     })
 
@@ -176,6 +210,8 @@ const DailyCalorieCalculator = () => {
             setUserSex(lsUser.stats.userSex)
             setUserBodyFatPercentage(lsUser.stats.userBodyFatPercentage)
             setUserMaintenanceCalories(lsUser.stats.userMaintenanceCalories)
+            setUserGoal(lsUser.targets.userGoal)
+            setUserRateOfWeightChange(lsUser.targets.userRateOfWeightChange)
         }
     }, []);
 
@@ -190,6 +226,21 @@ const DailyCalorieCalculator = () => {
         userBodyFatPercentage: number
     }
 
+    interface Targets {
+        userRateOfWeightChange: number,
+        userDailyCalorieTarget : number,
+        userGoal: string, 
+        userProteinTarget: number,
+        userCarbTarget: number,
+        userFatTarget: number, 
+        userFibreTarget: number,
+        userFluidTarget: number,
+        userFruitTarget: number,
+        userVegTarget: number
+    }
+
+
+
 
     const userStats: Stats = {
         userBodyWeight: userBodyWeight,
@@ -202,9 +253,23 @@ const DailyCalorieCalculator = () => {
         userBodyFatPercentage: userBodyFatPercentage
     }
 
+    const userTargets : Targets = {
+        userRateOfWeightChange: userRateOfWeightChange,
+        userDailyCalorieTarget : userDailyCalorieTarget,
+        userGoal: userGoal, 
+        userProteinTarget: user.targets.userProteinTarget,
+        userCarbTarget: user.targets.userCarbTarget,
+        userFatTarget: user.targets.userFatTarget, 
+        userFibreTarget: user.targets.userFibreTarget,
+        userFluidTarget: user.targets.userFluidTarget,
+        userFruitTarget: user.targets.userFruitTarget,
+        userVegTarget: user.targets.userVegTarget
+    }
+
 
     useEffect(() => {
         user.stats = userStats
+        user.targets = userTargets
         window.localStorage.setItem('User', JSON.stringify(user));
     }, [userStats]);
 

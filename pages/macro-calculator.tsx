@@ -85,6 +85,23 @@ const MacroCalculator = () => {
             userMaintenanceCalories: number
             userBodyFatPercentage: number
         },
+        targets: {
+            userRateOfWeightChange: number,
+            userDailyCalorieTarget : number,
+            userGoal: string, 
+            userProteinTarget: number,
+            userCarbTarget: number,
+            userFatTarget: number, 
+            userFibreTarget: number,
+            userFluidTarget: number,
+            userFruitTarget: number,
+            userVegTarget: number
+        },
+        preferences: {
+            userProteinPerKG: number,
+            userPercentageOfFats: number,
+            userFibrePer1000kcal: number
+        }
     }
 
     const [user, setUser] = React.useState<User>({
@@ -97,6 +114,23 @@ const MacroCalculator = () => {
             userRMR: 0,
             userMaintenanceCalories: 0,
             userBodyFatPercentage: 0
+        },
+        targets: {
+            userRateOfWeightChange: 0,
+            userDailyCalorieTarget : 0,
+            userGoal: '', 
+            userProteinTarget: 0,
+            userCarbTarget: 0,
+            userFatTarget: 0, 
+            userFibreTarget: 0,
+            userFluidTarget: 0,
+            userFruitTarget: 0,
+            userVegTarget: 0
+        },
+        preferences: {
+            userProteinPerKG: 2.2,
+            userPercentageOfFats: 0.25,
+            userFibrePer1000kcal: 14
         }
     })
 
@@ -108,7 +142,11 @@ const MacroCalculator = () => {
             let lsUser = JSON.parse(data)
             setUser(lsUser)
             setUserBodyWeight(Number(lsUser.stats.userBodyWeight))
-            setUserGoal(lsUser.stats.userGoal)
+            setUserGoal(lsUser.targets.userGoal)
+            setUserDailyCalorieTarget(lsUser.targets.userDailyCalorieTarget)
+            setUserProteinPerKG(lsUser.preferences.userProteinPerKG)
+            setUserPercentageOfFats(lsUser.preferences.userPercentageOfFats)
+            setUserFibrePer1000kcal(lsUser.preferences.userFibrePer1000kcal)
         }
     }, []);
 
@@ -123,6 +161,25 @@ const MacroCalculator = () => {
         userBodyFatPercentage: number
     }
 
+    interface Targets {
+        userRateOfWeightChange: number,
+        userDailyCalorieTarget : number,
+        userGoal: string, 
+        userProteinTarget: number,
+        userCarbTarget: number,
+        userFatTarget: number, 
+        userFibreTarget: number,
+        userFluidTarget: number,
+        userFruitTarget: number,
+        userVegTarget: number
+    }
+
+    interface Preferences {
+        userProteinPerKG: number,
+        userPercentageOfFats: number,
+        userFibrePer1000kcal: number
+    }
+
 
     const userStats: Stats = {
         userBodyWeight: userBodyWeight,
@@ -135,9 +192,32 @@ const MacroCalculator = () => {
         userBodyFatPercentage: user.stats.userBodyFatPercentage
     }
 
+    const userTargets : Targets = {
+        userRateOfWeightChange: user.targets.userRateOfWeightChange,
+        userDailyCalorieTarget : userDailyCalorieTarget,
+        userGoal: userGoal, 
+        userProteinTarget: userProteinTarget,
+        userCarbTarget: userCarbTarget,
+        userFatTarget: userFatTarget, 
+        userFibreTarget: userFibreTarget,
+        userFluidTarget: userFluidTarget,
+        userFruitTarget: userFruitTarget,
+        userVegTarget: userVegTarget
+    }
+
+    const userPreferences : Preferences = {
+        userProteinPerKG: userProteinPerKG,
+        userPercentageOfFats: userPercentageOfFats,
+        userFibrePer1000kcal: userFibrePer1000kcal
+    }
+
+
+
 
     useEffect(() => {
         user.stats = userStats
+        user.targets = userTargets
+        user.preferences = userPreferences
         window.localStorage.setItem('User', JSON.stringify(user));
     }, [userStats]);
 
@@ -235,7 +315,7 @@ const MacroCalculator = () => {
                             <Text color={"white"} mb='8px'>Daily Calorie Target:</Text>
                             <Input mb={3} variant={"outlined"} value={userDailyCalorieTarget} onChange={handleUserDailyCalorieTargetChange}></Input>
                             <Text color={"white"} mb='8px'>Your Goal:</Text>
-                            <Select bg='white' placeholder="Select from dropdown" mb={3} onChange={handleUserGoalChange}>
+                            <Select bg='white' placeholder={"Select from dropdown"} value={userGoal} mb={3} onChange={handleUserGoalChange}>
                                 <option value='Gaining'>Lean Gaining</option>
                                 <option value='Dieting'>Dieting</option>
                             </Select>
