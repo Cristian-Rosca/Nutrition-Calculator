@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Heading, Input, Select, Text, Flex, Stat, StatNumber, StatHelpText, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
+import { Box, Button, Heading, Select, Text, Stat, StatNumber, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
@@ -8,56 +8,31 @@ import { Chart } from 'react-chartjs-2';
 
 const MacroCalculator = () => {
     const [userBodyWeight, setUserBodyWeight] = React.useState<number>(0)
-    const handleUserBodyWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserBodyWeight(Number(e.target.value))
 
     const [userDailyCalorieTarget, setUserDailyCalorieTarget] = React.useState<number>(0)
-    const handleUserDailyCalorieTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserDailyCalorieTarget(Number(e.target.value))
 
     const [userGoal, setUserGoal] = React.useState<string>('')
     const handleUserGoalChange = (e: React.ChangeEvent<HTMLSelectElement>) => setUserGoal(e.target.value)
 
     const [userProteinPerKG, setUserProteinPerKG] = React.useState<number>(2.2)
-    const handleUserProteinPerKGChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserProteinPerKG(Number(e.target.value))
-
-    // {
-    //     if (Number(e.target.value) < 1) {
-    //         setUserProteinPerKG(1.8)
-    //     }
-    //     else if (Number(e.target.value) > 2.8) {
-    //         setUserProteinPerKG(2.8)
-    //     }
-    //     else {
-    //         setUserProteinPerKG(Number(e.target.value))
-    //     }
-    // }
 
     const [userPercentageOfFats, setUserPercentageOfFats] = React.useState<number>(25)
-    const handleUserPercentageOfFatsChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserPercentageOfFats(Number(e.target.value))
 
     const [userFibrePer1000kcal, setUserFibrePer1000kcal] = React.useState<number>(14)
-    const handleUserFibrePer1000kcalChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserFibrePer1000kcal(Number(e.target.value))
 
     const [userProteinTarget, setUserProteinTarget] = React.useState<number>(0)
-    const handleUserProteinTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserProteinTarget(Number(e.target.value))
 
     const [userCarbTarget, setUserCarbTarget] = React.useState<number>(0)
-    const handleUserCarbTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserCarbTarget(Number(e.target.value))
 
     const [userFatTarget, setUserFatTarget] = React.useState<number>(0)
-    const handleUserFatTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserFatTarget(Number(e.target.value))
 
     const [userFibreTarget, setUserFibreTarget] = React.useState<number>(0)
-    const handleUserFibreTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserFibreTarget(Number(e.target.value))
 
     const [userFluidTarget, setUserFluidTarget] = React.useState<number>(0)
-    const handleUserFluidTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserFluidTarget(Number(e.target.value))
 
     const [userFruitTarget, setUserFruitTarget] = React.useState<number>(0)
-    const handleUserFruitTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserFruitTarget(Number(e.target.value))
 
     const [userVegTarget, setUserVegTarget] = React.useState<number>(0)
-    const handleUserVegTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserVegTarget(Number(e.target.value))
-
 
 
     function calculateMacroRecommendations(dailyCalorieTarget: number, bodyWeightInKG: number, proteinPerKG: number, percentageOfFats: number, fibrePer1000kcal: number, goal: string) {
@@ -324,7 +299,6 @@ const MacroCalculator = () => {
                 <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} my={"2rem"}>
                     {/*  Inputs  */}
                     <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} alignItems={"center"} ml={"10rem"}>
-
                         <Box display={"flex"} flexDirection={"column"} width={"17rem"}>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
                             <NumberInput mb={3} variant={"outlined"} value={formatToKG(userBodyWeight)} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
@@ -352,7 +326,7 @@ const MacroCalculator = () => {
                                 <option value='Dieting'>Dieting</option>
                             </Select>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Protein per KG:</Text>
-                            <NumberInput mb={3} variant={"outlined"} value={formatToGrams(userProteinPerKG)} rounded={10} bgColor={"white"}  precision={1} step={0.1} min={1.6} max={2.6} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToGrams(userProteinPerKG)} rounded={10} bgColor={"white"} precision={1} step={0.1} min={1.6} max={2.6} onChange={(value: number | string) => {
                                 setUserProteinPerKG(Number(value));
                             }}>
                                 <NumberInputField />
@@ -372,7 +346,7 @@ const MacroCalculator = () => {
                                 </NumberInputStepper>
                             </NumberInput>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Fibre per 1000kcal:</Text>
-                            <NumberInput mb={3} variant={"outlined"} value={formatToGrams(userFibrePer1000kcal)} rounded={10} bgColor={"white"}  step={1} min={10} max={20} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToGrams(userFibrePer1000kcal)} rounded={10} bgColor={"white"} step={1} min={10} max={20} onChange={(value: number | string) => {
                                 setUserFibrePer1000kcal(Number(value));
                             }}>
                                 <NumberInputField />
@@ -384,7 +358,6 @@ const MacroCalculator = () => {
                         </Box>
                     </Box>
 
-
                     {/*  Outputs  */}
                     <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} mr={"10rem"}>
                         <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
@@ -392,6 +365,7 @@ const MacroCalculator = () => {
                                 <Heading color={"white"} size={'xl'} textAlign={"center"}>{userDailyCalorieTarget} kcal 🎯</Heading>
                             </Box>
                         </Box>
+
                         <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"}>
                             <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
                                 <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Protein 🍗</Heading>
@@ -402,6 +376,7 @@ const MacroCalculator = () => {
                                     </Stat>
                                 </Box>
                             </Box>
+
                             <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
                                 <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Carbs 🍚</Heading>
                                 <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
@@ -410,6 +385,7 @@ const MacroCalculator = () => {
                                     </Stat>
                                 </Box>
                             </Box>
+
                             <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
                                 <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fats 🥑</Heading>
                                 <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
@@ -418,15 +394,14 @@ const MacroCalculator = () => {
                                     </Stat>
                                 </Box>
                             </Box>
-
                         </Box>
+
                         <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} alignItems={"center"}>
                             <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} >
                                 <Heading color={"white"} size={'lg'} mt={"2rem"} textAlign={"center"}>Fibre 🍞</Heading>
                                 <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} height={"auto"} width={"12rem"} mt={"1rem"} >
                                     <Stat bg={"white"} rounded={20}>
                                         <StatNumber fontSize={"35"} textAlign={"center"}>{userFibreTarget}g</StatNumber>
-
                                     </Stat>
                                 </Box>
                             </Box>
@@ -480,27 +455,15 @@ const MacroCalculator = () => {
                                                     }
                                                     return label;
                                                 }
-
-
                                             }
                                         }
                                     }
-
-
-
                                 }
-
                                 }
-
                             />
                         </Box>
-
-
-
-
                     </Box>
                 </Box>
-
 
                 {/*  Steps  */}
                 <Box display={"flex"} justifyContent={"center"}>
@@ -540,12 +503,7 @@ const MacroCalculator = () => {
                     </Box>
                 </Box>
             </Box>
-
-
-
-
         </>
-
     );
 }
 

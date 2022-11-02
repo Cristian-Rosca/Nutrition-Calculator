@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Button, Divider, Flex, Heading, Input, Select, Text, Stat, StatNumber, StatHelpText, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
+import { Box, Button, Heading, Select, Text, Stat, StatNumber, StatHelpText, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
 import bodyFatGuide from "../public/body-fat-guide.png"
@@ -14,16 +14,13 @@ const DailyCalorieCalculator = () => {
     }
 
     const [userBodyWeight, setUserBodyWeight] = React.useState<number>(0)
-    const handleUserBodyWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserBodyWeight(Number(e.target.value))
 
     const [userSex, setUserSex] = React.useState<string>('')
     const handleUserSexChange = (e: React.ChangeEvent<HTMLSelectElement>) => setUserSex(e.target.value)
 
     const [userBodyFatPercentage, setUserBodyFatPercentage] = React.useState<number>(0)
-    const handleUserBodyFatPercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserBodyFatPercentage(Number(e.target.value))
 
     const [userMaintenanceCalories, setUserMaintenanceCalories] = React.useState<number>(0)
-    const handleUserMaintenanceCaloriesChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserMaintenanceCalories(Number(e.target.value))
 
     const [userGoal, setUserGoal] = React.useState<string>('')
     const handleUserGoalChange = (e: React.ChangeEvent<HTMLSelectElement>) => setUserGoal(e.target.value)
@@ -152,11 +149,11 @@ const DailyCalorieCalculator = () => {
         },
         targets: {
             userRateOfWeightChange: number,
-            userDailyCalorieTarget : number,
-            userGoal: string, 
+            userDailyCalorieTarget: number,
+            userGoal: string,
             userProteinTarget: number,
             userCarbTarget: number,
-            userFatTarget: number, 
+            userFatTarget: number,
             userFibreTarget: number,
             userFluidTarget: number,
             userFruitTarget: number,
@@ -182,11 +179,11 @@ const DailyCalorieCalculator = () => {
         },
         targets: {
             userRateOfWeightChange: 0,
-            userDailyCalorieTarget : 0,
-            userGoal: '', 
+            userDailyCalorieTarget: 0,
+            userGoal: '',
             userProteinTarget: 0,
             userCarbTarget: 0,
-            userFatTarget: 0, 
+            userFatTarget: 0,
             userFibreTarget: 0,
             userFluidTarget: 0,
             userFruitTarget: 0,
@@ -198,7 +195,6 @@ const DailyCalorieCalculator = () => {
             userFibrePer1000kcal: 14
         }
     })
-
 
 
     useEffect(() => {
@@ -228,18 +224,16 @@ const DailyCalorieCalculator = () => {
 
     interface Targets {
         userRateOfWeightChange: number,
-        userDailyCalorieTarget : number,
-        userGoal: string, 
+        userDailyCalorieTarget: number,
+        userGoal: string,
         userProteinTarget: number,
         userCarbTarget: number,
-        userFatTarget: number, 
+        userFatTarget: number,
         userFibreTarget: number,
         userFluidTarget: number,
         userFruitTarget: number,
         userVegTarget: number
     }
-
-
 
 
     const userStats: Stats = {
@@ -253,13 +247,13 @@ const DailyCalorieCalculator = () => {
         userBodyFatPercentage: userBodyFatPercentage
     }
 
-    const userTargets : Targets = {
+    const userTargets: Targets = {
         userRateOfWeightChange: userRateOfWeightChange,
-        userDailyCalorieTarget : userDailyCalorieTarget,
-        userGoal: userGoal, 
+        userDailyCalorieTarget: userDailyCalorieTarget,
+        userGoal: userGoal,
         userProteinTarget: user.targets.userProteinTarget,
         userCarbTarget: user.targets.userCarbTarget,
-        userFatTarget: user.targets.userFatTarget, 
+        userFatTarget: user.targets.userFatTarget,
         userFibreTarget: user.targets.userFibreTarget,
         userFluidTarget: user.targets.userFluidTarget,
         userFruitTarget: user.targets.userFruitTarget,
@@ -298,7 +292,6 @@ const DailyCalorieCalculator = () => {
     }
 
     const formatToKG = (val: number) => val + ` kg`
-
     const formatToPercentage = (val: number) => val + ` %`
     const formatToKcal = (val: number) => val + ` kcal`
 
@@ -314,10 +307,9 @@ const DailyCalorieCalculator = () => {
                     <Heading color={"white"} mb={"5"}>Calculate Daily Calorie Target</Heading>
                 </Box>
                 <Box display={"flex"} flexDirection={"row"} justifyContent={"space-evenly"} mt={"2rem"} mb={"2rem"}>
-
-                <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} alignItems={"center"} ml={"10rem"}>
-                            {/*  Inputs  */}
-                            <Box display={"flex"} flexDirection={"column"} width={"17rem"}>
+                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} flex={1} alignItems={"center"} ml={"10rem"}>
+                        {/*  Inputs  */}
+                        <Box display={"flex"} flexDirection={"column"} width={"17rem"}>
                             <Text color={"white"} alignSelf={"start"} mb='8px'>Body Weight in KG:</Text>
                             <NumberInput mb={3} variant={"outlined"} value={formatToKG(userBodyWeight)} rounded={10} bgColor={"white"} step={1} min={0} max={300} onChange={(value: number | string) => {
                                 setUserBodyWeight(Number(value));
@@ -334,7 +326,7 @@ const DailyCalorieCalculator = () => {
                                 <option value='Female'>Female</option>
                             </Select>
                             <Text color={"white"} mb='8px'> Body Fat Percentage: </Text>
-                            <NumberInput mb={3} variant={"outlined"} value={formatToPercentage(userBodyFatPercentage)} rounded={10} bgColor={"white"}  step={1} min={0} max={99} onChange={(value: number | string) => {
+                            <NumberInput mb={3} variant={"outlined"} value={formatToPercentage(userBodyFatPercentage)} rounded={10} bgColor={"white"} step={1} min={0} max={99} onChange={(value: number | string) => {
                                 setUserBodyFatPercentage(Number(value));
                             }}>
                                 <NumberInputField />
@@ -363,10 +355,10 @@ const DailyCalorieCalculator = () => {
                             <Select minHeight={"4rem"} bg='white' placeholder="Select from dropdown" value={userRateOfWeightChange} mb={3} onChange={handleUserRatesOfWeightChangeChange} whiteSpace="normal">
                                 {weightChangeOptionDropdown}
                             </Select>
-                            
-                            </Box>
+
+                        </Box>
                     </Box>
-                    
+
                     {/*  OUTPUTS  */}
                     <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-start"} alignItems={"center"} flex={1} mr={"10rem"}>
                         <Heading color={"white"} size={'lg'} textAlign={"center"}>Your Daily Calorie Target 🎯</Heading>
@@ -379,11 +371,12 @@ const DailyCalorieCalculator = () => {
                     </Box>
                 </Box>
                 <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-                
-                {displayBodyFatGuide ? <Box mb={"3rem"} display={"flex"} justifyContent={"center"} flexDirection={"column"} alignItems={"center"}>
-                            <Image src={bodyFatGuide} width={"950px"} height={"225px"} />
-                        </Box> : ""}
-                        </Box>
+
+                    {displayBodyFatGuide ? <Box mb={"3rem"} display={"flex"} justifyContent={"center"} flexDirection={"column"} alignItems={"center"}>
+                        <Image src={bodyFatGuide} width={"950px"} height={"225px"} />
+                    </Box> : ""}
+                </Box>
+
                 {/*  Steps  */}
                 <Box display={"flex"} justifyContent={"center"}>
                     <Box display={"flex"} flexDirection="column" width="50%" justifyContent={"flex-start"} >
@@ -422,10 +415,6 @@ const DailyCalorieCalculator = () => {
                     </Box>
                 </Box>
             </Box>
-
-
-
-
         </>
     );
 }
